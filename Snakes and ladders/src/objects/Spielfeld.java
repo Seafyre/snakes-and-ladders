@@ -1,7 +1,6 @@
 package objects;
 
 import javax.swing.JPanel;
-import
 import javax.swing.JFrame;
 
 public class Spielfeld {
