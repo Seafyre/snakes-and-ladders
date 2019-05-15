@@ -1,6 +1,10 @@
 package objects;
 
 public class Feld {
+	
+	public int value;
+	public boolean link;
+	public Square sq;
 
 // Feste Werte für die Größe des Felds, sowie Schlangen und Leitern
 	private final int ROWS = 10;
