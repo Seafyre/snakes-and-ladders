@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+
+
 public class gameboard {
 	gameboard()
 	{
@@ -36,7 +38,7 @@ public class gameboard {
 	private void set_background_image()
 	{
 		try {
-            this.board.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("/Users/geehopper/Desktop/Uni/Semester 2/Fächer/Programmieren/Projekt/snakes-and-ladders/Snakes and ladders/src/images/temporary_board_background.jpg")))));
+            this.board.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("images/temporary_board_background.jpg")))));
         } catch (IOException e) {
             e.printStackTrace();
         }
