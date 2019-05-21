@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -12,11 +13,13 @@ import javax.swing.JFrame;
 
 
 public class gameboard {
+	
 	gameboard()
 	{
 		this.init_board();
 	}
 	
+	//initial methods
 	private void init_board()
 	{
 		this.setup_board();
@@ -33,8 +36,15 @@ public class gameboard {
 		this.board.setVisible(true);
 		//make windows close when clicking on 'x' in top right corner
 		this.board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//initialize field attribute
+		for(int i = 0; i < 100; i++)
+		{
+			this.fields.add(new Field(i, 0));
+		}
 	}
 	
+	
+	//setter methods
 	private void set_background_image()
 	{
 		try {
@@ -46,10 +56,10 @@ public class gameboard {
         this.board.pack();
 	}
 	
+	
+	
+	//attributes
 	private JFrame board;
-	
-	
-	/*public List s; 
-	public Square square;*/
-	//public boolean win
+	//picked array list due to performance
+	private List fields = new ArrayList();
 }

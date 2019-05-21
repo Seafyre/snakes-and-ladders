@@ -2,7 +2,7 @@ package objects;
 
 import java.util.Random;
 
-public class Würfel {
+public class Dice {
 
 	public static void main(String[] args){
 		
@@ -12,6 +12,6 @@ public class Würfel {
 			augenZahl = 1 + wuerfel.nextInt(6);
 			System.out.println(augenZahl);
 			
-// +1 weil Zählen bei 0 beginnt
+// +1 weil Zï¿½hlen bei 0 beginnt
 		}
 	}

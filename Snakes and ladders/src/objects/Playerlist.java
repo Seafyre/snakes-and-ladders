@@ -1,6 +1,6 @@
 package objects;
 
-public class Spielerliste {
+public class Playerlist {
 
 	public String winner;
 	public Player player;
