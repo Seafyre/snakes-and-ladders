@@ -15,9 +15,9 @@ import javax.swing.JFrame;
 
 
 
-public class gameboard {
+public class Gameboard {
 	
-	gameboard(int width, int heigth, int size)
+	Gameboard(int width, int heigth, int size)
 	{
 		this.init_board(width, heigth, size);
 	}
@@ -25,6 +25,7 @@ public class gameboard {
 	//initial methods
 	private void init_board(int width, int heigth, int size)
 	{
+		this.swap = false;
 		this.setup_board(width, heigth, size);
 		//this.set_background_image();
 	}
@@ -36,10 +37,13 @@ public class gameboard {
 		//setting its size
 		this.heigth = heigth;
 		this.width = width;
+		//size = amount of fields
 		this.size = size;
 		this.board.setSize(this.width, this.heigth);
 		//setting the layout to gridbagconstraints
 		this.board.setLayout(new GridBagLayout());
+		//make windows appear at center of screen
+		this.board.setLocationRelativeTo(null);
 		//making it visible
 		this.board.setVisible(true);
 		//make windows close when clicking on 'x' in top right corner
@@ -50,35 +54,48 @@ public class gameboard {
 	
 	private void init_fields()
 	{
-		this.c.anchor = GridBagConstraints.NORTH;
-		this.c.gridy = 0;
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.NORTH;
+		c.gridy = 0;
 		for(int i = 0; i < this.size; i++)
 		{
 			if(i%10 == 0) 
 			{
-				System.out.println("gridy: " + this.c.gridy);
-				this.c.gridy += 10;
+				System.out.println("gridy: " + c.gridy);
+				c.gridy += 10;
 			}
 			
 			
 			//-2/-4 due to the borders
 			this.fields.add(new Field(this.calculateFieldId(i), 0, (this.width/10), (this.heigth/10)));
-			if(i%10 == 0)
+			if(i == 0)
 				((Field)this.fields.get(i)).setplayer(true);
+			/*if(i%10 == 0)
+				((Field)this.fields.get(i)).setplayer(true);*/
 			
-			if(i == 10)
-				((Field)this.fields.get(10)).setplayer(false);
-			
-			this.board.add(((Field) this.fields.get(i)).get_piclabel(), this.c);
+			this.board.add(((Field) this.fields.get(i)).get_piclabel(), c);
 		}
 		//Updating frame to make initialized fields appear
 		SwingUtilities.updateComponentTreeUI(this.board);
 	}
 	
+	//calculates the id of each field, so the fieldorder is right
 	private int calculateFieldId(int i)
 	{
-		//int temp = size-i;
-		return 100 - (i%10);
+		
+		int temp = 0;
+		//order change after each row(10 fields)
+		if (i > 0 && i%10 == 0)
+			this.swap = !this.swap;
+		
+		
+		if (this.swap == false)
+			return this.size-i;
+		else
+		{
+			temp = i%10;
+			return this.size-(i-temp + 9-temp);
+		}
 		
 		/*if (temp % 10 == 0)
 			return (this.size-i);
@@ -88,14 +105,10 @@ public class gameboard {
 		//int subtract = size/10;
 	}
 	
-	public void update_fields()
+	public void update_fields(Player player)
 	{
-		/*for(int i = 0; i < fields.size(); i++)
-		{
-			if(((Field)fields.get(i)).hasplayer())
-				this.board.add()
-
-		}*/
+		((Field)this.fields.get(player.getOldPosition())).setplayer(false);
+		((Field)this.fields.get(player.getPosition())).setplayer(true);
 	}
 	
 	//setter methods
@@ -115,8 +128,6 @@ public class gameboard {
 	//attributes
 	//board jframe
 	private JFrame board;
-	//GridBagLayout
-	GridBagConstraints c = new GridBagConstraints();
 	//picked array list due to performance
 	private List fields = new ArrayList();
 	//heigth of board(in pixels)
@@ -125,5 +136,8 @@ public class gameboard {
 	private int width;
 	//size of board(in fields)
 	private int size;
+	//Field swap variable to determine wether we need to change order of row
+	private boolean swap;
+	
 	
 }
