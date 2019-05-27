@@ -28,6 +28,8 @@ public class Game {
 			{
 				System.out.println("rolled!");
 				activeplayer.move(this.dice.getVal());
+				this.board.update_fields(activeplayer);
+				
 				if(activeplayer == this.player1)
 					activeplayer = this.player2;
 				else

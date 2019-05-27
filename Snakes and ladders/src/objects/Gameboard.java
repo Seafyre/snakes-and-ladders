@@ -68,8 +68,12 @@ public class Gameboard {
 			
 			//-2/-4 due to the borders
 			this.fields.add(new Field(this.calculateFieldId(i), 0, (this.width/10), (this.heigth/10)));
-			if(i == 0)
+			if(((Field)this.fields.get(i)).getid() == 1)
 				((Field)this.fields.get(i)).setplayer(true);
+			
+			
+			/*if(this.calculateFieldId(i) == 0)
+				((Field)this.fields.get(this.calculateFieldId(i))).setplayer(true);*/
 			/*if(i%10 == 0)
 				((Field)this.fields.get(i)).setplayer(true);*/
 			
@@ -107,8 +111,20 @@ public class Gameboard {
 	
 	public void update_fields(Player player)
 	{
-		((Field)this.fields.get(player.getOldPosition())).setplayer(false);
-		((Field)this.fields.get(player.getPosition())).setplayer(true);
+		for(int i = 0; i < this.size; i++)
+		{
+			if(((Field)this.fields.get(i)).getid() == player.getPosition())
+			{
+				
+				((Field)this.fields.get(i)).setplayer(true);
+			}
+			if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
+			{
+				System.out.println("found");
+				((Field)this.fields.get(i)).setplayer(false);
+			}
+		}
+		SwingUtilities.updateComponentTreeUI(this.board);
 	}
 	
 	//setter methods

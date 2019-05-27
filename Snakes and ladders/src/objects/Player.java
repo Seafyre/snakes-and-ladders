@@ -27,7 +27,8 @@ public class Player {
 		this.id = id;
 		this.name = name;
 		this.color = color;
-		this.position = 0;
+		this.position = 1;
+		this.oldposition = 1;
 	}
 	
 	//getter methods
