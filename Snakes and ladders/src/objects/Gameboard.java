@@ -109,24 +109,52 @@ public class Gameboard {
 	
 	public void update_fields(Player player)
 	{
-		for(int i = 0; i < this.size; i++)
+		if(!player.hasWon())
 		{
-			if(((Field)this.fields.get(i)).getid() == player.getPosition())
+			for(int i = 0; i < this.size; i++)
 			{
-				if(((Field)this.fields.get(i)).hasPlayers() == 0)
-					((Field)this.fields.get(i)).setplayer(1);
-				else
-					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()+1);
-			}
-			if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
-			{
-				if(((Field)this.fields.get(i)).hasPlayers() == 0)
-					((Field)this.fields.get(i)).setplayer(0);
-				else
-					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
+				if(((Field)this.fields.get(i)).getid() == player.getPosition())
+				{
+					if(((Field)this.fields.get(i)).hasPlayers() == 0)
+						((Field)this.fields.get(i)).setplayer(1);
+					else
+						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()+1);
+				}
+				if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
+				{
+					if(((Field)this.fields.get(i)).hasPlayers() == 0)
+						((Field)this.fields.get(i)).setplayer(0);
+					else
+						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
+				}
 			}
 		}
+		else
+		{
+			for(int i = 0; i < this.size; i++)
+			{
+				if(((Field)this.fields.get(i)).getid() == this.size)
+				{
+					if(((Field)this.fields.get(i)).hasPlayers() == 0)
+						((Field)this.fields.get(i)).setplayer(1);
+				}
+				if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
+				{
+					if(((Field)this.fields.get(i)).hasPlayers() == 0)
+						((Field)this.fields.get(i)).setplayer(0);
+					else
+						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
+				}
+			}
+		}
+			
 		SwingUtilities.updateComponentTreeUI(this.board);
+	}
+	
+	//getter methods
+	public int getSize()
+	{
+		return this.size;
 	}
 	
 	//setter methods

@@ -29,6 +29,7 @@ public class Player {
 		this.color = color;
 		this.position = 1;
 		this.oldposition = 1;
+		this.won = false;
 	}
 	
 	//getter methods
@@ -45,6 +46,11 @@ public class Player {
 	public int getOldPosition()
 	{
 		return this.oldposition;
+	}
+	
+	public boolean hasWon()
+	{
+		return this.won;
 	}
 	
 	//setter methods
@@ -65,7 +71,10 @@ public class Player {
 		//System.out.println("new position of " + this.name + " is: " + this.getPosition());
 	}
 	
-	
+	public void setWon()
+	{
+		this.won = true;
+	}
 	
 	//attributes
 	private int id;
@@ -73,6 +82,8 @@ public class Player {
 	private String color;
 	private int position;
 	private int oldposition;
+	
+	private boolean won;
 	
 	BufferedImage myModel;
 	JLabel modelLabel;

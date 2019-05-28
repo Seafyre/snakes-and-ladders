@@ -26,7 +26,15 @@ public class Game {
 		{
 			if(!dice.getRoll())
 			{
-				activeplayer.move(this.dice.getVal());
+				int randomVal = this.dice.getVal();
+				if(activeplayer.getPosition() + randomVal < this.board.getSize())
+					activeplayer.move(randomVal);
+				else
+				{
+					activeplayer.move(this.board.getSize());
+					activeplayer.setWon();
+				}
+				
 				this.board.update_fields(activeplayer);
 				
 				if(activeplayer == this.player1)
