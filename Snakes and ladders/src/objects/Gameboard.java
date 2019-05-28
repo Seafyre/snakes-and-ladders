@@ -61,7 +61,6 @@ public class Gameboard {
 		{
 			if(i%10 == 0) 
 			{
-				System.out.println("gridy: " + c.gridy);
 				c.gridy += 10;
 			}
 			
@@ -69,8 +68,7 @@ public class Gameboard {
 			//-2/-4 due to the borders
 			this.fields.add(new Field(this.calculateFieldId(i), 0, (this.width/10), (this.heigth/10)));
 			if(((Field)this.fields.get(i)).getid() == 1)
-				((Field)this.fields.get(i)).setplayer(true);
-			
+				((Field)this.fields.get(i)).setplayer(2);
 			
 			/*if(this.calculateFieldId(i) == 0)
 				((Field)this.fields.get(this.calculateFieldId(i))).setplayer(true);*/
@@ -115,13 +113,17 @@ public class Gameboard {
 		{
 			if(((Field)this.fields.get(i)).getid() == player.getPosition())
 			{
-				
-				((Field)this.fields.get(i)).setplayer(true);
+				if(((Field)this.fields.get(i)).hasPlayers() == 0)
+					((Field)this.fields.get(i)).setplayer(1);
+				else
+					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()+1);
 			}
 			if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
 			{
-				System.out.println("found");
-				((Field)this.fields.get(i)).setplayer(false);
+				if(((Field)this.fields.get(i)).hasPlayers() == 0)
+					((Field)this.fields.get(i)).setplayer(0);
+				else
+					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
 			}
 		}
 		SwingUtilities.updateComponentTreeUI(this.board);

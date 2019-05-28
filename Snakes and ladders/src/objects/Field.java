@@ -73,29 +73,39 @@ public class Field {
 	}
 	
 	//setter methods
-	public void setplayer(boolean val)
+	public void setplayer(int amount)
 	{
-		this.hasPlayer = val;
-		if(this.hasPlayer)
+		this.hasPlayers = amount;
+		System.out.println("Field " + Integer.toString(this.id) + " has " + Integer.toString(this.hasPlayers()) + " Players");
+		
+		if(this.hasPlayers >= 1)
 		{
-			try {
-				this.playerModel = ImageIO.read(new File("images/triangle.png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(!this.hasModel)
+			{
+				this.hasModel = true;
+				try {
+					this.playerModel = ImageIO.read(new File("images/triangle.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				this.playerLabel = new JLabel(new ImageIcon(playerModel.getScaledInstance(this.width-20, this.height-20, Image.SCALE_FAST)));
+				
+				//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+				this.playerLabel.setAlignmentX(0.5f);
+				this.playerLabel.setAlignmentY(0.5f);
+				
+				
+				picLabel.add(playerLabel);
 			}
-			this.playerLabel = new JLabel(new ImageIcon(playerModel.getScaledInstance(this.width-20, this.height-20, Image.SCALE_FAST)));
-			
-			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
-			this.playerLabel.setAlignmentX(0.5f);
-			this.playerLabel.setAlignmentY(0.5f);
-			
-			
-			picLabel.add(playerLabel);
+			else
+				return;
 		}
-		else 
+		else
 		{
+			System.out.println("removed on " + Integer.toString(this.id));
 			picLabel.remove(playerLabel);
+			this.hasModel = false;
 		}
 	}
 	
@@ -124,9 +134,9 @@ public class Field {
 	}
 	
 	//check if there's a player standing on the field
-	public boolean hasplayer()
+	public int hasPlayers()
 	{
-		return this.hasPlayer;
+		return this.hasPlayers;
 	}
 	
 	//attributes
@@ -134,7 +144,8 @@ public class Field {
 	private int link;
 	private int width;
 	private int height;
-	boolean hasPlayer;
+	int hasPlayers;
+	boolean hasModel;
 	//background image of each seperate tile
 	BufferedImage myPicture;
 	JLabel picLabel;

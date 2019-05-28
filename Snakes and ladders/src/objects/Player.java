@@ -62,7 +62,7 @@ public class Player {
 	public void move(int amount)
 	{
 		this.setPosition(this.getPosition() + amount);
-		System.out.println("new position of " + this.name + " is: " + this.getPosition());
+		//System.out.println("new position of " + this.name + " is: " + this.getPosition());
 	}
 	
 	

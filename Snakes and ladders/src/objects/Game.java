@@ -26,7 +26,6 @@ public class Game {
 		{
 			if(!dice.getRoll())
 			{
-				System.out.println("rolled!");
 				activeplayer.move(this.dice.getVal());
 				this.board.update_fields(activeplayer);
 				
