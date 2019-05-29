@@ -58,6 +58,7 @@ public class Gameboard {
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTH;
 		c.gridy = 0;
+		
 		//initializing basic fields
 		for(int i = 0; i < this.size; i++)
 		{
@@ -71,6 +72,7 @@ public class Gameboard {
 			this.fields.add(new Field(this.calculateFieldId(i), 0, (this.width/10), (this.heigth/10)));
 			if(((Field)this.fields.get(i)).getid() == 1)
 				((Field)this.fields.get(i)).setplayer(2);
+			
 			
 			/*if(this.calculateFieldId(i) == 0)
 				((Field)this.fields.get(this.calculateFieldId(i))).setplayer(true);*/
@@ -90,6 +92,7 @@ public class Gameboard {
 	
 	
 	//init ufos
+	//1 = src, 2 = dest, everything else -> just overlay
 	private void initUfos()
 	{
 		for(int i = 0; i < this.size; i++)
@@ -97,12 +100,14 @@ public class Gameboard {
 			if(((Field)this.fields.get(i)).getid() == 33)
 			{
 				((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
+				((Field)this.fields.get(i+10)).setUfo(new Ufo(3), 3);
 				((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);
 			}
 			
 			if(((Field)this.fields.get(i)).getid() == 34)
 			{
 				((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
+				((Field)this.fields.get(i+10)).setUfo(new Ufo(3), 3);
 				((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);
 			}
 		}

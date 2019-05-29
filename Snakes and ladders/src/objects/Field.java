@@ -126,7 +126,45 @@ public class Field
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height-20, Image.SCALE_FAST)));
+			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height, Image.SCALE_FAST)));
+			
+			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			this.ufoLabel.setAlignmentX(0.5f);
+			this.ufoLabel.setAlignmentY(0.5f);
+			
+			
+			picLabel.add(ufoLabel);
+		}
+		
+		if(!this.hasUfoModel  && this.ufosrcdest == 2)
+		{
+			this.hasUfoModel = true;
+			try {
+				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
+			
+			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			this.ufoLabel.setAlignmentX(0.5f);
+			this.ufoLabel.setAlignmentY(0.5f);
+			
+			
+			picLabel.add(ufoLabel);
+		}
+		
+		if(!this.hasUfoModel  && this.ufosrcdest == 3)
+		{
+			this.hasUfoModel = true;
+			try {
+				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
 			
 			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
 			this.ufoLabel.setAlignmentX(0.5f);
@@ -142,6 +180,11 @@ public class Field
 	public JLabel get_piclabel()
 	{
 		return this.picLabel;
+	}
+	
+	public JLabel getUfoLabel()
+	{
+		return this.ufoLabel;
 	}
 	
 	//return playerlabel
