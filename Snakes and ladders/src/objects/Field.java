@@ -15,9 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.OverlayLayout;
 import javax.swing.border.Border;
 
-public class Field {
-	
-	Player player;
+public class Field 
+{
 	
 	Field(int id, int link, int width, int height)
 	{
@@ -32,6 +31,9 @@ public class Field {
 		this.link = link;
 		this.width = width;
 		this.height = height;
+		
+		this.ufo = null;
+		this.ufosrcdest = 0;
 		
 		//init background picture
 		this.init_bg_picture(width, height);
@@ -80,9 +82,9 @@ public class Field {
 		
 		if(this.hasPlayers >= 1)
 		{
-			if(!this.hasModel)
+			if(!this.hasPlayerModel)
 			{
-				this.hasModel = true;
+				this.hasPlayerModel = true;
 				try {
 					this.playerModel = ImageIO.read(new File("images/triangle.png"));
 				} catch (IOException e) {
@@ -105,7 +107,33 @@ public class Field {
 		{
 			System.out.println("removed on " + Integer.toString(this.id));
 			picLabel.remove(playerLabel);
-			this.hasModel = false;
+			this.hasPlayerModel = false;
+		}
+	}
+	
+	//setufo field srcdest = 0 -> src, srcdest = 1 -> dest
+	public void setUfo(Ufo ufo, int srcdest)
+	{
+		this.ufo = ufo;
+		this.ufosrcdest = srcdest;
+		
+		if(!this.hasUfoModel  && this.ufosrcdest == 1)
+		{
+			this.hasUfoModel = true;
+			try {
+				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height-20, Image.SCALE_FAST)));
+			
+			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			this.ufoLabel.setAlignmentX(0.5f);
+			this.ufoLabel.setAlignmentY(0.5f);
+			
+			
+			picLabel.add(ufoLabel);
 		}
 	}
 	
@@ -116,6 +144,7 @@ public class Field {
 		return this.picLabel;
 	}
 	
+	//return playerlabel
 	public JLabel getPlayerLabel()
 	{
 		return this.playerLabel;
@@ -139,19 +168,34 @@ public class Field {
 		return this.hasPlayers;
 	}
 	
+	//check if the field is the source or dest of a ufo
+	public int getUfoSrcDest()
+	{
+		return this.ufosrcdest;
+	}
+	
 	//attributes
 	private int id;
 	private int link;
 	private int width;
 	private int height;
 	int hasPlayers;
-	boolean hasModel;
+	boolean hasPlayerModel;
+	boolean hasUfoModel;
 	//background image of each seperate tile
 	BufferedImage myPicture;
 	JLabel picLabel;
 	//add(picLabel);
 	BufferedImage playerModel;
 	JLabel playerLabel;
+	
+	//ufo pics
+	BufferedImage ufoModel;
+	JLabel ufoLabel;
+	
+	Ufo ufo;
+	//srcdest = 1 -> src, srcdest = 2 -> dest
+	int ufosrcdest;
 	
 
 }

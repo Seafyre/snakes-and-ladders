@@ -24,7 +24,7 @@ public class Game {
 		Player activeplayer = this.player1;
 		while(true)
 		{
-			if(!dice.getRoll())
+			if(!dice.getRoll() && !activeplayer.hasWon())
 			{
 				int randomVal = this.dice.getVal();
 				if(activeplayer.getPosition() + randomVal < this.board.getSize())
@@ -37,10 +37,26 @@ public class Game {
 				
 				this.board.update_fields(activeplayer);
 				
-				if(activeplayer == this.player1)
-					activeplayer = this.player2;
-				else
-					activeplayer = this.player1;
+				if(board.getField(activeplayer.getPosition()).getUfoSrcDest() == 2)
+				{
+					System.out.println("on ufo dest field");
+					activeplayer.move(20);
+					this.board.update_fields(activeplayer);
+				}
+				
+				
+				if(!activeplayer.hasWon())
+				{
+					if(activeplayer == this.player1)
+						activeplayer = this.player2;
+					else
+						activeplayer = this.player1;
+				}
+			}
+			else if(activeplayer.hasWon())
+			{
+				System.out.println("Player: " + activeplayer.getName() + " has won!");
+				System.exit(0);
 			}
 			try {
 				Thread.sleep(10);

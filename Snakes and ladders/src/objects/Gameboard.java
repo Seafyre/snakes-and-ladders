@@ -52,11 +52,13 @@ public class Gameboard {
 		this.init_fields();
 	}
 	
+	//init field layout
 	private void init_fields()
 	{
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTH;
 		c.gridy = 0;
+		//initializing basic fields
 		for(int i = 0; i < this.size; i++)
 		{
 			if(i%10 == 0) 
@@ -77,8 +79,33 @@ public class Gameboard {
 			
 			this.board.add(((Field) this.fields.get(i)).get_piclabel(), c);
 		}
+		
+		//initializing ufos
+		this.initUfos();
+		
 		//Updating frame to make initialized fields appear
 		SwingUtilities.updateComponentTreeUI(this.board);
+	}
+	
+	
+	
+	//init ufos
+	private void initUfos()
+	{
+		for(int i = 0; i < this.size; i++)
+		{
+			if(((Field)this.fields.get(i)).getid() == 33)
+			{
+				((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
+				((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);
+			}
+			
+			if(((Field)this.fields.get(i)).getid() == 34)
+			{
+				((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
+				((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);
+			}
+		}
 	}
 	
 	//calculates the id of each field, so the fieldorder is right
@@ -107,6 +134,7 @@ public class Gameboard {
 		//int subtract = size/10;
 	}
 	
+	//update fields to display new playerposition after each round
 	public void update_fields(Player player)
 	{
 		if(!player.hasWon())
@@ -152,9 +180,24 @@ public class Gameboard {
 	}
 	
 	//getter methods
+	//return amount of fields on the board
 	public int getSize()
 	{
 		return this.size;
+	}
+	
+	public Field getField(int val)
+	{
+		for(int i = 0; i < this.size; i++)
+		{
+			if(((Field)this.fields.get(i)).getid() == val)
+				return (Field)this.fields.get(i);
+			else
+				continue;
+		}
+		
+		return null;
+			
 	}
 	
 	//setter methods
@@ -176,6 +219,9 @@ public class Gameboard {
 	private JFrame board;
 	//picked array list due to performance
 	private List fields = new ArrayList();
+	//List of ufos on the map
+	private List ufos = new ArrayList();
+	
 	//heigth of board(in pixels)
 	private int heigth;
 	//width of board(in pixels)

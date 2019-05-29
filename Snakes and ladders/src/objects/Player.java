@@ -54,23 +54,27 @@ public class Player {
 	}
 	
 	//setter methods
+	//set the new position of the player
 	private void setPosition(int val)
 	{
 		this.setOldPosition(this.position);
 		this.position = val;
 	}
 	
+	//set the old position of the player
 	private void setOldPosition(int val)
 	{
 		this.oldposition = val;
 	}
 	
+	//move the player in relation to its current position
 	public void move(int amount)
 	{
 		this.setPosition(this.getPosition() + amount);
 		//System.out.println("new position of " + this.name + " is: " + this.getPosition());
 	}
 	
+	//set won flag on player
 	public void setWon()
 	{
 		this.won = true;
