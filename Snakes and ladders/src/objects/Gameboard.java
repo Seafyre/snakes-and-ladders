@@ -86,7 +86,8 @@ public class Gameboard {
 		this.initUfos();
 		
 		//Updating frame to make initialized fields appear
-		SwingUtilities.updateComponentTreeUI(this.board);
+		this.board.revalidate();
+		this.board.repaint();
 	}
 	
 	
@@ -95,20 +96,36 @@ public class Gameboard {
 	//1 = src, 2 = dest, everything else -> just overlay
 	private void initUfos()
 	{
+		this.initUfo(33, 3);
+		this.initUfo(54, 3);
+		this.initUfo(65, 3);
+		this.initUfo(78, 3);
+	}
+	
+	//initialize single ufo
+	private void initUfo(int fieldid, int size)
+	{
 		for(int i = 0; i < this.size; i++)
 		{
-			if(((Field)this.fields.get(i)).getid() == 33)
+			if(((Field)this.fields.get(i)).getid() == fieldid)
 			{
-				((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
-				((Field)this.fields.get(i+10)).setUfo(new Ufo(3), 3);
-				((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);
-			}
-			
-			if(((Field)this.fields.get(i)).getid() == 34)
-			{
-				((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
-				((Field)this.fields.get(i+10)).setUfo(new Ufo(3), 3);
-				((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);
+				for(int k = 0; k < size; k++)
+				{		
+					System.out.println("K is: " + Integer.toString(k));
+					if(k == size-1)
+					{
+						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), 2);
+						System.out.println("k is size");
+					}
+					else if(k != 2)
+						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), k);
+					else
+						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), size+1);
+					
+					/*((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
+					((Field)this.fields.get(i+10)).setUfo(new Ufo(3), 3);
+					((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);*/
+				}
 			}
 		}
 	}
@@ -181,7 +198,9 @@ public class Gameboard {
 			}
 		}
 			
-		SwingUtilities.updateComponentTreeUI(this.board);
+		//refresh GUI components
+		this.board.revalidate();
+		this.board.repaint();
 	}
 	
 	//getter methods

@@ -2,6 +2,8 @@ package objects;
 
 import java.sql.Time;
 
+import javax.swing.SwingUtilities;
+
 public class Game {
 
 	Game(int boardwidth, int boardheigth, int boardsize)
@@ -24,7 +26,7 @@ public class Game {
 		Player activeplayer = this.player1;
 		while(true)
 		{
-			if(!dice.getRoll() && !activeplayer.hasWon())
+			if(!this.dice.getRoll() && !activeplayer.hasWon())
 			{
 				int randomVal = this.dice.getVal();
 				if(activeplayer.getPosition() + randomVal < this.board.getSize())
@@ -39,9 +41,16 @@ public class Game {
 				
 				if(board.getField(activeplayer.getPosition()).getUfoSrcDest() == 2)
 				{
-					System.out.println("on ufo dest field");
+					this.dice.setDisabled(true);
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					activeplayer.move(20);
 					this.board.update_fields(activeplayer);
+					this.dice.setDisabled(false);
 				}
 				
 				
