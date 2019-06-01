@@ -82,16 +82,17 @@ public class Field
 		
 		if(this.hasPlayers >= 1)
 		{
+			
 			if(!this.hasPlayerModel)
 			{
 				this.hasPlayerModel = true;
 				try {
-					this.playerModel = ImageIO.read(new File("images/triangle.png"));
+					this.playerModel = ImageIO.read(new File("images/player_m.png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				this.playerLabel = new JLabel(new ImageIcon(playerModel.getScaledInstance(this.width-20, this.height-20, Image.SCALE_FAST)));
+				this.playerLabel = new JLabel(new ImageIcon(playerModel.getScaledInstance(this.width, this.height, Image.SCALE_FAST)));
 				
 				//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
 				this.playerLabel.setAlignmentX(0.5f);
@@ -100,6 +101,7 @@ public class Field
 				
 				picLabel.add(playerLabel);
 			}
+			
 			else
 				return;
 		}
@@ -109,6 +111,9 @@ public class Field
 			picLabel.remove(playerLabel);
 			this.hasPlayerModel = false;
 		}
+		
+		
+		
 	}
 	
 	//setufo field srcdest = 0 -> src, srcdest = 1 -> dest
@@ -173,6 +178,7 @@ public class Field
 	{
 		return this.playerLabel;
 	}
+	
 	
 	//return id of field
 	public int getid()

@@ -30,12 +30,32 @@ public class Player {
 		this.position = 1;
 		this.oldposition = 1;
 		this.won = false;
+		this.setModel(id);
 	}
+	
+	private void setModel(int id)
+	{
+		if(id == 1)
+			this.modelpath = "images/player_m.png";
+		else
+			this.modelpath = "images/player_f.png";	
+	}
+	
 	
 	//getter methods
 	public String getName() 
 	{
 		return this.name;
+	}
+	
+	public String getModelPath()
+	{
+		return this.modelpath;
+	}
+	
+	public int getId()
+	{
+		return this.id;
 	}
 	
 	public int getPosition()
@@ -89,8 +109,7 @@ public class Player {
 	
 	private boolean won;
 	
-	BufferedImage myModel;
-	JLabel modelLabel;
+	String modelpath;
 	
 }
 

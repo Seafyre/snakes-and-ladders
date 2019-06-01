@@ -73,7 +73,6 @@ public class Gameboard {
 			if(((Field)this.fields.get(i)).getid() == 1)
 				((Field)this.fields.get(i)).setplayer(2);
 			
-			
 			/*if(this.calculateFieldId(i) == 0)
 				((Field)this.fields.get(this.calculateFieldId(i))).setplayer(true);*/
 			/*if(i%10 == 0)
@@ -111,11 +110,9 @@ public class Gameboard {
 			{
 				for(int k = 0; k < size; k++)
 				{		
-					System.out.println("K is: " + Integer.toString(k));
 					if(k == size-1)
 					{
 						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), 2);
-						System.out.println("k is size");
 					}
 					else if(k != 2)
 						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), k);
