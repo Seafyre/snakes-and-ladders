@@ -22,18 +22,21 @@ public class Game {
 	
 	private void checkUfo(Player activeplayer)
 	{
-		if(board.getField(activeplayer.getPosition()).getUfoSrcDest() == 2)
+		if(!activeplayer.hasWon())
 		{
-			this.dice.setDisabled(true);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(board.getField(activeplayer.getPosition()).getUfoSrcDest() == 2)
+			{
+				this.dice.setDisabled(true);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				activeplayer.move(20);
+				this.board.update_fields(activeplayer);
+				this.dice.setDisabled(false);
 			}
-			activeplayer.move(20);
-			this.board.update_fields(activeplayer);
-			this.dice.setDisabled(false);
 		}
 	}
 	
