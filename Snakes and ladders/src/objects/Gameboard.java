@@ -52,16 +52,18 @@ public class Gameboard {
 		this.init_fields();
 	}
 	
+	//init field layout
 	private void init_fields()
 	{
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTH;
 		c.gridy = 0;
+		
+		//initializing basic fields
 		for(int i = 0; i < this.size; i++)
 		{
 			if(i%10 == 0) 
 			{
-				System.out.println("gridy: " + c.gridy);
 				c.gridy += 10;
 			}
 			
@@ -69,8 +71,7 @@ public class Gameboard {
 			//-2/-4 due to the borders
 			this.fields.add(new Field(this.calculateFieldId(i), 0, (this.width/10), (this.heigth/10)));
 			if(((Field)this.fields.get(i)).getid() == 1)
-				((Field)this.fields.get(i)).setplayer(true);
-			
+				((Field)this.fields.get(i)).setplayer(2);
 			
 			/*if(this.calculateFieldId(i) == 0)
 				((Field)this.fields.get(this.calculateFieldId(i))).setplayer(true);*/
@@ -79,8 +80,51 @@ public class Gameboard {
 			
 			this.board.add(((Field) this.fields.get(i)).get_piclabel(), c);
 		}
+		
+		//initializing ufos
+		this.initUfos();
+		
 		//Updating frame to make initialized fields appear
-		SwingUtilities.updateComponentTreeUI(this.board);
+		this.board.revalidate();
+		this.board.repaint();
+	}
+	
+	
+	
+	//init ufos
+	//1 = src, 2 = dest, everything else -> just overlay
+	private void initUfos()
+	{
+		this.initUfo(33, 3);
+		this.initUfo(54, 3);
+		this.initUfo(65, 3);
+		this.initUfo(78, 3);
+	}
+	
+	//initialize single ufo
+	private void initUfo(int fieldid, int size)
+	{
+		for(int i = 0; i < this.size; i++)
+		{
+			if(((Field)this.fields.get(i)).getid() == fieldid)
+			{
+				for(int k = 0; k < size; k++)
+				{		
+					if(k == size-1)
+					{
+						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), 2);
+					}
+					else if(k != 2)
+						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), k);
+					else
+						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), size+1);
+					
+					/*((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
+					((Field)this.fields.get(i+10)).setUfo(new Ufo(3), 3);
+					((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);*/
+				}
+			}
+		}
 	}
 	
 	//calculates the id of each field, so the fieldorder is right
@@ -109,22 +153,72 @@ public class Gameboard {
 		//int subtract = size/10;
 	}
 	
+	//update fields to display new playerposition after each round
 	public void update_fields(Player player)
+	{
+		if(!player.hasWon())
+		{
+			for(int i = 0; i < this.size; i++)
+			{
+				if(((Field)this.fields.get(i)).getid() == player.getPosition())
+				{
+					if(((Field)this.fields.get(i)).hasPlayers() == 0)
+						((Field)this.fields.get(i)).setplayer(1);
+					else
+						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()+1);
+				}
+				if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
+				{
+					if(((Field)this.fields.get(i)).hasPlayers() == 0)
+						((Field)this.fields.get(i)).setplayer(0);
+					else
+						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
+				}
+			}
+		}
+		else
+		{
+			for(int i = 0; i < this.size; i++)
+			{
+				if(((Field)this.fields.get(i)).getid() == this.size)
+				{
+					if(((Field)this.fields.get(i)).hasPlayers() == 0)
+						((Field)this.fields.get(i)).setplayer(1);
+				}
+				if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
+				{
+					if(((Field)this.fields.get(i)).hasPlayers() == 0)
+						((Field)this.fields.get(i)).setplayer(0);
+					else
+						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
+				}
+			}
+		}
+			
+		//refresh GUI components
+		this.board.revalidate();
+		this.board.repaint();
+	}
+	
+	//getter methods
+	//return amount of fields on the board
+	public int getSize()
+	{
+		return this.size;
+	}
+	
+	public Field getField(int val)
 	{
 		for(int i = 0; i < this.size; i++)
 		{
-			if(((Field)this.fields.get(i)).getid() == player.getPosition())
-			{
-				
-				((Field)this.fields.get(i)).setplayer(true);
-			}
-			if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
-			{
-				System.out.println("found");
-				((Field)this.fields.get(i)).setplayer(false);
-			}
+			if(((Field)this.fields.get(i)).getid() == val)
+				return (Field)this.fields.get(i);
+			else
+				continue;
 		}
-		SwingUtilities.updateComponentTreeUI(this.board);
+		
+		return null;
+			
 	}
 	
 	//setter methods
@@ -146,6 +240,9 @@ public class Gameboard {
 	private JFrame board;
 	//picked array list due to performance
 	private List fields = new ArrayList();
+	//List of ufos on the map
+	private List ufos = new ArrayList();
+	
 	//heigth of board(in pixels)
 	private int heigth;
 	//width of board(in pixels)

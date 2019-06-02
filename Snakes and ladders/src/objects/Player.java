@@ -29,12 +29,33 @@ public class Player {
 		this.color = color;
 		this.position = 1;
 		this.oldposition = 1;
+		this.won = false;
+		this.setModel(id);
 	}
+	
+	private void setModel(int id)
+	{
+		if(id == 1)
+			this.modelpath = "images/player_m.png";
+		else
+			this.modelpath = "images/player_f.png";	
+	}
+	
 	
 	//getter methods
 	public String getName() 
 	{
 		return this.name;
+	}
+	
+	public String getModelPath()
+	{
+		return this.modelpath;
+	}
+	
+	public int getId()
+	{
+		return this.id;
 	}
 	
 	public int getPosition()
@@ -47,25 +68,37 @@ public class Player {
 		return this.oldposition;
 	}
 	
+	public boolean hasWon()
+	{
+		return this.won;
+	}
+	
 	//setter methods
+	//set the new position of the player
 	private void setPosition(int val)
 	{
 		this.setOldPosition(this.position);
 		this.position = val;
 	}
 	
+	//set the old position of the player
 	private void setOldPosition(int val)
 	{
 		this.oldposition = val;
 	}
 	
+	//move the player in relation to its current position
 	public void move(int amount)
 	{
 		this.setPosition(this.getPosition() + amount);
-		System.out.println("new position of " + this.name + " is: " + this.getPosition());
+		//System.out.println("new position of " + this.name + " is: " + this.getPosition());
 	}
 	
-	
+	//set won flag on player
+	public void setWon()
+	{
+		this.won = true;
+	}
 	
 	//attributes
 	private int id;
@@ -74,8 +107,9 @@ public class Player {
 	private int position;
 	private int oldposition;
 	
-	BufferedImage myModel;
-	JLabel modelLabel;
+	private boolean won;
+	
+	String modelpath;
 	
 }
 

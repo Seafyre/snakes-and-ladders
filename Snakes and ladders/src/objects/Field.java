@@ -15,9 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.OverlayLayout;
 import javax.swing.border.Border;
 
-public class Field {
-	
-	Player player;
+public class Field 
+{
 	
 	Field(int id, int link, int width, int height)
 	{
@@ -32,6 +31,9 @@ public class Field {
 		this.link = link;
 		this.width = width;
 		this.height = height;
+		
+		this.ufo = null;
+		this.ufosrcdest = 0;
 		
 		//init background picture
 		this.init_bg_picture(width, height);
@@ -65,7 +67,7 @@ public class Field {
 	private void initFieldNumber()
 	{
 		JLabel num = new JLabel(Integer.toString(this.id));
-        num.setFont(num.getFont().deriveFont(28f));
+        num.setFont(num.getFont().deriveFont(18f));
         num.setForeground(Color.CYAN);
         num.setAlignmentX(0.5f);
         num.setAlignmentY(0.5f);
@@ -73,29 +75,89 @@ public class Field {
 	}
 	
 	//setter methods
-	public void setplayer(boolean val)
+	public void setplayer(int amount)
 	{
-		this.hasPlayer = val;
-		if(this.hasPlayer)
+		this.hasPlayers = amount;
+		//System.out.println("Field " + Integer.toString(this.id) + " has " + Integer.toString(this.hasPlayers()) + " Players");
+		
+		if(this.hasPlayers >= 1)
 		{
+			
+			if(!this.hasPlayerModel)
+			{
+				this.hasPlayerModel = true;
+				try {
+					this.playerModel = ImageIO.read(new File("images/player_m.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				this.playerLabel = new JLabel(new ImageIcon(playerModel.getScaledInstance(this.width, this.height, Image.SCALE_FAST)));
+				
+				//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+				this.playerLabel.setAlignmentX(0.5f);
+				this.playerLabel.setAlignmentY(0.5f);
+				
+				
+				picLabel.add(playerLabel);
+			}
+			
+			else
+				return;
+		}
+		else
+		{
+			//System.out.println("removed on " + Integer.toString(this.id));
+			picLabel.remove(playerLabel);
+			this.hasPlayerModel = false;
+		}
+		
+		
+		
+	}
+	
+	//setufo field srcdest = 0 -> src, srcdest = 1 -> dest
+	public void setUfo(Ufo ufo, int srcdest)
+	{
+		this.ufo = ufo;
+		this.ufosrcdest = srcdest;
+		
+		if(!this.hasUfoModel  && this.ufosrcdest == 0)
+		{
+			this.hasUfoModel = true;
 			try {
-				this.playerModel = ImageIO.read(new File("images/triangle.png"));
+				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.playerLabel = new JLabel(new ImageIcon(playerModel.getScaledInstance(this.width-20, this.height-20, Image.SCALE_FAST)));
+			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height, Image.SCALE_FAST)));
 			
 			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
-			this.playerLabel.setAlignmentX(0.5f);
-			this.playerLabel.setAlignmentY(0.5f);
+			this.ufoLabel.setAlignmentX(0.5f);
+			this.ufoLabel.setAlignmentY(0.5f);
 			
 			
-			picLabel.add(playerLabel);
+			picLabel.add(ufoLabel);
 		}
-		else 
+		
+		if(!this.hasUfoModel && this.ufosrcdest > 0)
 		{
-			picLabel.remove(playerLabel);
+			this.hasUfoModel = true;
+			try {
+				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
+			
+			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			this.ufoLabel.setAlignmentX(0.5f);
+			this.ufoLabel.setAlignmentY(0.5f);
+			
+			
+			picLabel.add(ufoLabel);
 		}
 	}
 	
@@ -106,10 +168,17 @@ public class Field {
 		return this.picLabel;
 	}
 	
+	public JLabel getUfoLabel()
+	{
+		return this.ufoLabel;
+	}
+	
+	//return playerlabel
 	public JLabel getPlayerLabel()
 	{
 		return this.playerLabel;
 	}
+	
 	
 	//return id of field
 	public int getid()
@@ -124,9 +193,15 @@ public class Field {
 	}
 	
 	//check if there's a player standing on the field
-	public boolean hasplayer()
+	public int hasPlayers()
 	{
-		return this.hasPlayer;
+		return this.hasPlayers;
+	}
+	
+	//check if the field is the source or dest of a ufo
+	public int getUfoSrcDest()
+	{
+		return this.ufosrcdest;
 	}
 	
 	//attributes
@@ -134,13 +209,23 @@ public class Field {
 	private int link;
 	private int width;
 	private int height;
-	boolean hasPlayer;
+	int hasPlayers;
+	boolean hasPlayerModel;
+	boolean hasUfoModel;
 	//background image of each seperate tile
 	BufferedImage myPicture;
 	JLabel picLabel;
 	//add(picLabel);
 	BufferedImage playerModel;
 	JLabel playerLabel;
+	
+	//ufo pics
+	BufferedImage ufoModel;
+	JLabel ufoLabel;
+	
+	Ufo ufo;
+	//srcdest = 1 -> src, srcdest = 2 -> dest
+	int ufosrcdest;
 	
 
 }

@@ -35,10 +35,13 @@ public class Dice {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(getRoll())
+				if(!getDisabled())
 				{
-					setVal();
-					setRoll();
+					if(getRoll())
+					{
+						setVal();
+						setRoll();
+					}
 				}
 			}
 		});
@@ -48,6 +51,11 @@ public class Dice {
 	{
 		this.setRoll();
 		return this.val;
+	}
+	
+	private boolean getDisabled()
+	{
+		return this.disable;
 	}
 	
 	public boolean getRoll()
@@ -65,11 +73,17 @@ public class Dice {
 		this.roll = !this.roll;
 	}
 	
+	public void setDisabled(boolean val)
+	{
+		this.disable = val;
+	}
+	
 	JButton bcalc;
 	JFrame dice;
 	int width;
 	int heigth;
 	boolean roll;
+	boolean disable;
 	int val;
 	
 	/*Random wuerfel = new Random();
