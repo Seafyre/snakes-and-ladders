@@ -27,32 +27,11 @@ public class Player {
 		this.id = id;
 		this.name = name;
 		this.color = color;
-	}
-	
-	private void init_player_model(int width, int height)
-	{
-		 try {
-			this.myModel = ImageIO.read(new File("images/triangle.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 this.modelLabel = new JLabel(new ImageIcon(myModel.getScaledInstance(width, height, Image.SCALE_FAST)));
-		 
-		 //set background
-		// create a line border with the specified color and width
-        Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
- 
-        // set the border of this component
-        //this.modelLabel.setBorder(border);
+		this.position = 1;
+		this.oldposition = 1;
 	}
 	
 	//getter methods
-	private JLabel getModelLabel()
-	{
-		return this.modelLabel;
-	}
-	
 	public String getName() 
 	{
 		return this.name;
@@ -63,11 +42,37 @@ public class Player {
 		return this.position;
 	}
 	
+	public int getOldPosition()
+	{
+		return this.oldposition;
+	}
+	
+	//setter methods
+	private void setPosition(int val)
+	{
+		this.setOldPosition(this.position);
+		this.position = val;
+	}
+	
+	private void setOldPosition(int val)
+	{
+		this.oldposition = val;
+	}
+	
+	public void move(int amount)
+	{
+		this.setPosition(this.getPosition() + amount);
+		System.out.println("new position of " + this.name + " is: " + this.getPosition());
+	}
+	
+	
+	
 	//attributes
 	private int id;
 	private String name;
 	private String color;
 	private int position;
+	private int oldposition;
 	
 	BufferedImage myModel;
 	JLabel modelLabel;

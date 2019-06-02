@@ -1,5 +1,7 @@
 package objects;
 
+import java.sql.Time;
+
 public class Game {
 
 	Game(int boardwidth, int boardheigth, int boardsize)
@@ -7,20 +9,47 @@ public class Game {
 		this.init_game(boardwidth, boardheigth, boardsize);
 	}
 	
-	gameboard board;
-	
 	public void init_game(int boardwidth, int boardheigth, int boardsize)
 	{
 		System.out.println("starting game");
-		this.board = new gameboard(boardwidth, boardheigth, boardsize);
+		this.dice = new Dice(200, 200);
+		this.board = new Gameboard(boardwidth, boardheigth, boardsize);
+		this.player1 = new Player(1, "Nick", "Green");
+		this.player2 = new Player(2, "Sebastian", "Blue");
 	}
 	
 	
-	public int run()
+	public void run()
 	{
-		this.board.update_fields();
-		return 0;
+		Player activeplayer = this.player1;
+		while(true)
+		{
+			if(!dice.getRoll())
+			{
+				System.out.println("rolled!");
+				activeplayer.move(this.dice.getVal());
+				this.board.update_fields(activeplayer);
+				
+				if(activeplayer == this.player1)
+					activeplayer = this.player2;
+				else
+					activeplayer = this.player1;
+			}
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//this.board.update_fields();
+		//return 0;
 	}
+	
+	private Gameboard board;
+	private Dice dice;
+	Player player1;
+	Player player2;
 	
 	/*public Board board;
 	public Dice dice;
