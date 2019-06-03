@@ -66,7 +66,17 @@ public class Game {
 	{
 		if(activeplayer.getPosition() + randomVal < this.board.getSize())
 		{
-			activeplayer.move(randomVal);
+			for(int i = 0; i < randomVal; i++)
+			{
+				activeplayer.move(1);
+				this.board.update_fields(activeplayer);
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		else
 		{
@@ -113,9 +123,6 @@ public class Game {
 				
 				//move player randomVal fields
 				this.movePlayer(activeplayer, randomVal);
-				
-				//update GUI
-				this.board.update_fields(activeplayer);
 				
 				//check if player stands on an ufo/wormhole, if so move him again
 				this.checkUfo(activeplayer);

@@ -82,7 +82,7 @@ public class Gameboard {
 		}
 		
 		//initializing ufos
-		//this.initUfos();
+		this.initUfos();
 		
 		//initializing Wormholes
 		this.initWormholes();
@@ -99,16 +99,13 @@ public class Gameboard {
 	private void initUfos()
 	{
 		this.initUfo(33, 3);
-		this.initUfo(54, 3);
-		this.initUfo(65, 3);
-		this.initUfo(78, 3);
+		this.initUfo(46, 3);
+		this.initUfo(89, 3);
 	}
 	
 	private void initWormholes()
 	{
-		this.initWormhole(89, 3);
-		this.initWormhole(33, 3);
-		this.initWormhole(54, 3);
+		this.initWormhole(37, 3);
 		this.initWormhole(65, 3);
 		this.initWormhole(78, 3);
 	}
@@ -207,17 +204,11 @@ public class Gameboard {
 			{
 				if(((Field)this.fields.get(i)).getid() == player.getPosition())
 				{
-					if(((Field)this.fields.get(i)).hasPlayers() == 0)
-						((Field)this.fields.get(i)).setplayer(1);
-					else
-						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()+1);
+					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()+1);	
 				}
 				if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
 				{
-					if(((Field)this.fields.get(i)).hasPlayers() == 0)
-						((Field)this.fields.get(i)).setplayer(0);
-					else
-						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
+					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
 				}
 			}
 		}
