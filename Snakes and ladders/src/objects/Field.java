@@ -78,7 +78,7 @@ public class Field
 	}
 	
 	//setter methods
-	public void setplayer(int amount)
+	public void setplayer(int amount, Player activeplayer)
 	{
 		this.hasPlayers = amount;
 		//System.out.println("Field " + Integer.toString(this.id) + " has " + Integer.toString(this.hasPlayers()) + " Players");
@@ -90,7 +90,7 @@ public class Field
 			{
 				this.hasPlayerModel = true;
 				try {
-					this.playerModel = ImageIO.read(new File("images/player_m.png"));
+					this.playerModel = ImageIO.read(new File(activeplayer.getModelPath()));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -13,11 +13,16 @@ public class Game {
 	
 	public void init_game(int boardwidth, int boardheigth, int boardsize)
 	{
-		System.out.println("starting game");
-		this.dice = new Dice(200, 200);
-		this.board = new Gameboard(boardwidth, boardheigth, boardsize);
+		
 		this.player1 = new Player(1, "Nick", "Green");
 		this.player2 = new Player(2, "Sebastian", "Blue");
+		//letting player1 start
+		this.activeplayer = this.player1;
+		
+		System.out.println("starting game");
+		this.dice = new Dice(200, 200);
+		this.board = new Gameboard(boardwidth, boardheigth, boardsize, this.activeplayer);
+		
 	}
 	
 	//check if the acitveplayer is standing on an ufo source field, if so move him up
@@ -111,8 +116,6 @@ public class Game {
 	
 	public void run()
 	{
-		//letting player1 start
-		Player activeplayer = this.player1;
 		
 		while(true)
 		{
@@ -148,6 +151,7 @@ public class Game {
 	private Dice dice;
 	Player player1;
 	Player player2;
+	Player activeplayer;
 	
 	/*public Board board;
 	public Dice dice;

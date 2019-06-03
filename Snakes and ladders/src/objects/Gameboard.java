@@ -17,20 +17,20 @@ import javax.swing.JFrame;
 
 public class Gameboard {
 	
-	Gameboard(int width, int heigth, int size)
+	Gameboard(int width, int heigth, int size, Player activeplayer)
 	{
-		this.init_board(width, heigth, size);
+		this.init_board(width, heigth, size, activeplayer);
 	}
 	
 	//initial methods
-	private void init_board(int width, int heigth, int size)
+	private void init_board(int width, int heigth, int size, Player activeplayer)
 	{
 		this.swap = false;
-		this.setup_board(width, heigth, size);
+		this.setup_board(width, heigth, size, activeplayer);
 		//this.set_background_image();
 	}
 	
-	private void setup_board(int width, int heigth, int size)
+	private void setup_board(int width, int heigth, int size, Player activeplayer)
 	{
 		//creating new jframe
 		this.board = new JFrame("Snakes and Ladders");
@@ -49,11 +49,11 @@ public class Gameboard {
 		//make windows close when clicking on 'x' in top right corner
 		this.board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//initialize fields
-		this.init_fields();
+		this.init_fields(activeplayer);
 	}
 	
 	//init field layout
-	private void init_fields()
+	private void init_fields(Player activeplayer)
 	{
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTH;
@@ -71,7 +71,7 @@ public class Gameboard {
 			//-2/-4 due to the borders
 			this.fields.add(new Field(this.calculateFieldId(i), 0, (this.width/10), (this.heigth/10)));
 			if(((Field)this.fields.get(i)).getid() == 1)
-				((Field)this.fields.get(i)).setplayer(2);
+				((Field)this.fields.get(i)).setplayer(2, activeplayer);
 			
 			/*if(this.calculateFieldId(i) == 0)
 				((Field)this.fields.get(this.calculateFieldId(i))).setplayer(true);*/
@@ -204,11 +204,11 @@ public class Gameboard {
 			{
 				if(((Field)this.fields.get(i)).getid() == player.getPosition())
 				{
-					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()+1);	
+					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()+1, player);	
 				}
 				if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
 				{
-					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
+					((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1, player);
 				}
 			}
 		}
@@ -219,14 +219,14 @@ public class Gameboard {
 				if(((Field)this.fields.get(i)).getid() == this.size)
 				{
 					if(((Field)this.fields.get(i)).hasPlayers() == 0)
-						((Field)this.fields.get(i)).setplayer(1);
+						((Field)this.fields.get(i)).setplayer(1, player);
 				}
 				if(((Field)this.fields.get(i)).getid() == player.getOldPosition())
 				{
 					if(((Field)this.fields.get(i)).hasPlayers() == 0)
-						((Field)this.fields.get(i)).setplayer(0);
+						((Field)this.fields.get(i)).setplayer(0, player);
 					else
-						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1);
+						((Field)this.fields.get(i)).setplayer(((Field)this.fields.get(i)).hasPlayers()-1, player);
 				}
 			}
 		}
