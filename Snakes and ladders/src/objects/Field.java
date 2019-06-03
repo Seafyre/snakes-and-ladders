@@ -39,6 +39,8 @@ public class Field
 		this.init_bg_picture(width, height);
 	}
 	
+	
+	//setting space bg image on every field
 	private void init_bg_picture(int width, int height)
 	{
 		try {
@@ -64,6 +66,7 @@ public class Field
         //this.picLabel.setBorder(border);
 	}
 	
+	//add the id of each field to it	
 	private void initFieldNumber()
 	{
 		JLabel num = new JLabel(Integer.toString(this.id));
@@ -131,7 +134,7 @@ public class Field
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height, Image.SCALE_FAST)));
+			this.ufoLabel = new JLabel(new ImageIcon(this.ufoModel.getScaledInstance(this.width-20, this.height, Image.SCALE_FAST)));
 			
 			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
 			this.ufoLabel.setAlignmentX(0.5f);
@@ -150,7 +153,7 @@ public class Field
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.ufoLabel = new JLabel(new ImageIcon(ufoModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
+			this.ufoLabel = new JLabel(new ImageIcon(this.ufoModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
 			
 			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
 			this.ufoLabel.setAlignmentX(0.5f);
@@ -158,6 +161,50 @@ public class Field
 			
 			
 			picLabel.add(ufoLabel);
+		}
+	}
+
+	public void setWormhole(Wormhole wormhole, int srcdest)
+	{
+		this.wormhole = wormhole;
+		this.wormsrcdest = srcdest;
+		
+		if(!this.hasWormModel  && this.wormsrcdest == 0)
+		{
+			this.hasWormModel = true;
+			try {
+				this.wormholeModel = ImageIO.read(new File("images/wormholedest.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.wormholeLabel = new JLabel(new ImageIcon(this.wormholeModel.getScaledInstance(this.width, this.height, Image.SCALE_FAST)));
+			
+			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			this.wormholeLabel.setAlignmentX(0.5f);
+			this.wormholeLabel.setAlignmentY(0.5f);
+			
+			
+			picLabel.add(wormholeLabel);
+		}
+		
+		if(!this.hasWormModel && this.wormsrcdest > 0)
+		{
+			this.hasWormModel = true;
+			try {
+				this.wormholeModel = ImageIO.read(new File("images/wurmloch.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.wormholeLabel = new JLabel(new ImageIcon(this.wormholeModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
+			
+			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			this.wormholeLabel.setAlignmentX(0.5f);
+			this.wormholeLabel.setAlignmentY(0.5f);
+			
+			
+			picLabel.add(wormholeLabel);
 		}
 	}
 	
@@ -204,6 +251,11 @@ public class Field
 		return this.ufosrcdest;
 	}
 	
+	public int getWormSrcDest()
+	{
+		return this.wormsrcdest;
+	}
+	
 	//attributes
 	private int id;
 	private int link;
@@ -212,6 +264,7 @@ public class Field
 	int hasPlayers;
 	boolean hasPlayerModel;
 	boolean hasUfoModel;
+	boolean hasWormModel;
 	//background image of each seperate tile
 	BufferedImage myPicture;
 	JLabel picLabel;
@@ -219,13 +272,17 @@ public class Field
 	BufferedImage playerModel;
 	JLabel playerLabel;
 	
-	//ufo pics
+	//ufo/wormhole pics
 	BufferedImage ufoModel;
 	JLabel ufoLabel;
+	BufferedImage wormholeModel;
+	JLabel wormholeLabel;
 	
 	Ufo ufo;
+	Wormhole wormhole;
 	//srcdest = 1 -> src, srcdest = 2 -> dest
 	int ufosrcdest;
+	int wormsrcdest;
 	
 
 }

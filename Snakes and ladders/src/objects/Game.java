@@ -20,6 +20,7 @@ public class Game {
 		this.player2 = new Player(2, "Sebastian", "Blue");
 	}
 	
+	//check if the acitveplayer is standing on an ufo source field, if so move him up
 	private void checkUfo(Player activeplayer)
 	{
 		if(!activeplayer.hasWon())
@@ -34,6 +35,27 @@ public class Game {
 					e.printStackTrace();
 				}
 				activeplayer.move(20);
+				this.board.update_fields(activeplayer);
+				this.dice.setDisabled(false);
+			}
+		}
+	}
+	
+	//check if the acitveplayer is standing on an wormhole source field, if so move him down
+	private void checkWormhole(Player activeplayer)
+	{
+		if(!activeplayer.hasWon())
+		{
+			if(board.getField(activeplayer.getPosition()).getWormSrcDest() == 2)
+			{
+				this.dice.setDisabled(true);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				activeplayer.move(-20);
 				this.board.update_fields(activeplayer);
 				this.dice.setDisabled(false);
 			}
@@ -95,8 +117,9 @@ public class Game {
 				//update GUI
 				this.board.update_fields(activeplayer);
 				
-				//check if player stand under Ufo, if so move him again
+				//check if player stands on an ufo/wormhole, if so move him again
 				this.checkUfo(activeplayer);
+				this.checkWormhole(activeplayer);
 				
 				//starting nextround by changing current player
 				activeplayer = this.nextPlayer(activeplayer);

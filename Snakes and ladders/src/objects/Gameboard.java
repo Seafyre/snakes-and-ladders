@@ -82,7 +82,10 @@ public class Gameboard {
 		}
 		
 		//initializing ufos
-		this.initUfos();
+		//this.initUfos();
+		
+		//initializing Wormholes
+		this.initWormholes();
 		
 		//Updating frame to make initialized fields appear
 		this.board.revalidate();
@@ -99,6 +102,15 @@ public class Gameboard {
 		this.initUfo(54, 3);
 		this.initUfo(65, 3);
 		this.initUfo(78, 3);
+	}
+	
+	private void initWormholes()
+	{
+		this.initWormhole(89, 3);
+		this.initWormhole(33, 3);
+		this.initWormhole(54, 3);
+		this.initWormhole(65, 3);
+		this.initWormhole(78, 3);
 	}
 	
 	//initialize single ufo
@@ -118,6 +130,39 @@ public class Gameboard {
 						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), k);
 					else
 						((Field)this.fields.get(i+(k*10))).setUfo(new Ufo(3), size+1);
+					
+					/*((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
+					((Field)this.fields.get(i+10)).setUfo(new Ufo(3), 3);
+					((Field)this.fields.get(i+20)).setUfo(new Ufo(3), 2);*/
+				}
+			}
+		}
+	}
+	
+	//initialize single wormhole
+	private void initWormhole(int fieldid, int size)
+	{
+		for(int i = 0; i < this.size; i++)
+		{
+			if(((Field)this.fields.get(i)).getid() == fieldid)
+			{
+				for(int k = 0; k < size; k++)
+				{	
+					//setting the src(2) to size-1, so the src is set to the last tile reached by wormhole/ufo
+					if(k == 0)
+					{
+						((Field)this.fields.get(i+(k*10))).setWormhole(new Wormhole(3), 2);
+					}
+					//otherwise just pass in k
+					else if(k == size-1)
+					{
+						((Field)this.fields.get(i+(k*10))).setWormhole(new Wormhole(3), 0);
+					}
+					else if(k != 2)
+						((Field)this.fields.get(i+(k*10))).setWormhole(new Wormhole(3), k);
+					//if ks is equal to 2, we can't just pass it, since 2 indicates the src, so we just pass in size+1
+					else
+						((Field)this.fields.get(i+(k*10))).setWormhole(new Wormhole(3), size+1);
 					
 					/*((Field)this.fields.get(i)).setUfo(new Ufo(3), 1);
 					((Field)this.fields.get(i+10)).setUfo(new Ufo(3), 3);
