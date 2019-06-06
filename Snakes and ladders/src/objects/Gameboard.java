@@ -17,20 +17,20 @@ import javax.swing.JFrame;
 
 public class Gameboard {
 	
-	Gameboard(int width, int heigth, int size, Player activeplayer)
+	Gameboard(int width, int heigth, int size, Player activeplayer, boolean server)
 	{
-		this.init_board(width, heigth, size, activeplayer);
+		this.init_board(width, heigth, size, activeplayer, server);
 	}
 	
 	//initial methods
-	private void init_board(int width, int heigth, int size, Player activeplayer)
+	private void init_board(int width, int heigth, int size, Player activeplayer, boolean server)
 	{
 		this.swap = false;
-		this.setup_board(width, heigth, size, activeplayer);
+		this.setup_board(width, heigth, size, activeplayer, server);
 		//this.set_background_image();
 	}
 	
-	private void setup_board(int width, int heigth, int size, Player activeplayer)
+	private void setup_board(int width, int heigth, int size, Player activeplayer, boolean client)
 	{
 		//creating new jframe
 		this.board = new JFrame("Snakes and Ladders");
@@ -45,7 +45,7 @@ public class Gameboard {
 		//make windows appear at center of screen
 		this.board.setLocationRelativeTo(null);
 		//making it visible
-		this.board.setVisible(true);
+		this.board.setVisible(client);
 		//make windows close when clicking on 'x' in top right corner
 		this.board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//initialize fields

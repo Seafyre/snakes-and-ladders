@@ -1,17 +1,18 @@
 package objects;
 
+import java.rmi.RemoteException;
 import java.sql.Time;
 
 import javax.swing.SwingUtilities;
 
-public class Game {
+public class Game implements GameInterface {
 
-	Game(int boardwidth, int boardheigth, int boardsize)
+	Game(int boardwidth, int boardheigth, int boardsize, boolean client)
 	{
-		this.init_game(boardwidth, boardheigth, boardsize);
+		this.init_game(boardwidth, boardheigth, boardsize, client);
 	}
 	
-	public void init_game(int boardwidth, int boardheigth, int boardsize)
+	public void init_game(int boardwidth, int boardheigth, int boardsize, boolean client)
 	{
 		
 		this.player1 = new Player(1, "Nick", "Green");
@@ -20,8 +21,9 @@ public class Game {
 		this.activeplayer = this.player1;
 		
 		System.out.println("starting game");
-		this.dice = new Dice(200, 200);
-		this.board = new Gameboard(boardwidth, boardheigth, boardsize, this.activeplayer);
+		if(client)
+			this.dice = new Dice(200, 200);
+		this.board = new Gameboard(boardwidth, boardheigth, boardsize, this.activeplayer, client);
 		
 	}
 	
@@ -146,12 +148,28 @@ public class Game {
 		//this.board.update_fields();
 		//return 0;
 	}
+
+	
+	@Override
+	public int run_online(int val) throws RemoteException {
+		// TODO Auto-generated method stub
+		System.out.println("testi");
+		return val;
+	}
+	
+	//getter methods
+	Gameboard getBoard()
+	{
+		return this.board;
+	}
 	
 	private Gameboard board;
 	private Dice dice;
 	Player player1;
 	Player player2;
 	Player activeplayer;
+	
+	
 	
 	/*public Board board;
 	public Dice dice;
