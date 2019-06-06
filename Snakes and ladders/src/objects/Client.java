@@ -53,7 +53,18 @@ public class Client {
 	         {
 	        	 if(!client1.dice.getRoll())
 	 			 {
-	        		 System.out.println(stub.run_online(client1.dice.getVal())); 
+	        		 //System.out.println(stub.run_online(client1.dice.getVal())); 
+	        		 if(client1.myPlayer != null)
+	        			 client1.myPlayer = (Player) stub.moveOnlinePlayer(client1.myPlayer, client1.dice.getVal());
+	        		 else
+	        			 System.out.println("is null");
+	        		 while(client1.myPlayer == null)
+	        		 {
+	        			 System.out.println("waiting");
+	        			 client1.afterRoundDelay(200);
+	        		 }
+	        		 if(client1.myPlayer != null)
+	        			 client1.board.update_fields(client1.myPlayer);
 	 			 }
 	        	 client1.afterRoundDelay(10);
 	         }

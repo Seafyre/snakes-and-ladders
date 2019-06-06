@@ -151,10 +151,15 @@ public class Game implements GameInterface {
 
 	
 	@Override
-	public int run_online(int val) throws RemoteException {
+	public Player moveOnlinePlayer(Player player, int val) throws RemoteException {
 		// TODO Auto-generated method stub
-		System.out.println("testi");
-		return val;
+		//System.out.println("testi");
+		
+		player.move(10);
+		return player;
+		/*this.activeplayer = player;
+		this.movePlayer(activeplayer, val);
+		return this.activeplayer;*/
 	}
 	
 	//getter methods

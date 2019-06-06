@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -14,8 +15,13 @@ import javax.swing.border.Border;
 
 // Klasse beschreibt Spieler
 
-public class Player {
+public class Player implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5967802960863871052L;
+
 	Player(int id, String name, String color)
 	{
 		this.init(id, name, color);

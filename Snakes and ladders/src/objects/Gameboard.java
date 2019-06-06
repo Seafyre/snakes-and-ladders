@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,10 @@ import javax.swing.JFrame;
 
 
 
-public class Gameboard {
+public class Gameboard implements Serializable {
+	
+	
+	private static final long serialVersionUID = 3608126758176641235L;
 	
 	Gameboard(int width, int heigth, int size, Player activeplayer, boolean server)
 	{
