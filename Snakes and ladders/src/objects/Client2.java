@@ -2,8 +2,8 @@ package objects;
 import java.rmi.registry.LocateRegistry; 
 import java.rmi.registry.Registry; 
 
-public class Client {
-	private Client(int boardwidth, int boardheigth, int boardsize, boolean client) 
+public class Client2 {
+	private Client2(int boardwidth, int boardheigth, int boardsize, boolean client) 
 	{
 		this.init(boardwidth, boardheigth, boardsize, client);
 	}  
@@ -11,10 +11,10 @@ public class Client {
 	private void init(int boardwidth, int boardheigth, int boardsize, boolean client)
 	{
 		this.dice = new Dice(200, 200);
-		this.myPlayer = new Player(1, "Nick", "Green");
-		this.otherPlayer = new Player(2, "Sebastian", "Blue");
-		this.board = new Gameboard(boardwidth, boardheigth, boardsize, this.myPlayer, client);
-		this.myturn = true;
+		this.myPlayer = new Player(2, "Sebastian", "Blue");
+		this.otherPlayer = new Player(1, "Nick", "Green");
+		this.board = new Gameboard(boardwidth, boardheigth, boardsize, this.otherPlayer, client);
+		this.myturn = false;
 	}
 	
 	public void setGameboard(Gameboard board)
@@ -43,7 +43,7 @@ public class Client {
 	public static void main(String[] args) {  
 	      try {  
 	    	  
-	    	 Client client1 = new Client(800, 800, 100, true);
+	    	 Client2 client2 = new Client2(800, 800, 100, true);
 	    	  
 	         // Getting the registry 
 	         Registry registry = LocateRegistry.getRegistry(null); 
@@ -54,41 +54,41 @@ public class Client {
 	         // Calling the remote method using the obtained object 
 	         while(true)
 	         {
-	        	 if(client1.myturn == true && !client1.myPlayer.hasWon())
+	        	 if(client2.myturn == true && !client2.myPlayer.hasWon())
 	 			 {
-	        		 //System.out.println(stub.run_online(client1.dice.getVal())); 
-	        		 if(!client1.dice.getRoll())
+	        		 //System.out.println(stub.run_online(client2.dice.getVal())); 
+	        		 if(!client2.dice.getRoll())
 	        		 {
-	        			client1.dice.setDisabled(true);
-		        		client1.myturn = false;
-	        			client1.myPlayer = (Player) stub.moveOnlinePlayer(client1.myPlayer, client1.dice.getVal());
-		        		
+	        			 client2.dice.setDisabled(true);
+		        		client2.myturn = false;
+	        			client2.myPlayer = (Player) stub.moveOnlinePlayer(client2.myPlayer, client2.dice.getVal());
 		        		 
-		        		client1.board.update_fields(client1.myPlayer);
+		        		 
+		        		client2.board.update_fields(client2.myPlayer);
 	        		 }
 	 			 }
-	        	 else if(client1.myturn == false)
+	        	 else if(client2.myturn == false)
 	        	 {
 	        		 if(stub.roundFinished())
-	        			 client1.board.update_fields(stub.getOtherPlayer());
-	        		 if(stub.turn() == 1)
+	        			 client2.board.update_fields(stub.getOtherPlayer());
+	        		 if(stub.turn() == 2)
 	        		 {
-	        			 client1.myturn = true;
-	        			 client1.dice.setDisabled(false);
+	        			 client2.myturn = true;
+	        			 client2.dice.setDisabled(false);
 	        		 }
-	        		 //client1.afterRoundDelay(500);
-	        		 //System.out.println("client1 waiting...");
+	        		 //client2.afterRoundDelay(500);
+	        		 //System.out.println("client2 waiting...");
 	        	 }
-	        	 if(client1.myPlayer.hasWon() || client1.otherPlayer.hasWon())
+	        	 if(client2.myPlayer.hasWon() || client2.otherPlayer.hasWon())
 	        	 {
-	        		 if(client1.myPlayer.hasWon())
+	        		 if(client2.myPlayer.hasWon())
 	        			 System.out.println("you won");
 	        		 else
 	        			 System.out.println("enemy won");
 	        		 
 	        		 break;
 	        	 }
-	        	 client1.afterRoundDelay(10);
+	        	 client2.afterRoundDelay(10);
 	         }
 	         
 	         // System.out.println("Remote method invoked"); 

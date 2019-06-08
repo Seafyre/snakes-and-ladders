@@ -19,6 +19,7 @@ public class Game implements GameInterface {
 		this.player2 = new Player(2, "Sebastian", "Blue");
 		//letting player1 start
 		this.activeplayer = this.player1;
+		this.roundfinished = false;
 		
 		System.out.println("starting game");
 		if(client)
@@ -149,17 +150,41 @@ public class Game implements GameInterface {
 		//return 0;
 	}
 
+	@Override
+	public int turn() throws RemoteException
+	{
+		return this.whosturn;
+	}
 	
 	@Override
 	public Player moveOnlinePlayer(Player player, int val) throws RemoteException {
 		// TODO Auto-generated method stub
-		//System.out.println("testi");
 		
-		player.move(10);
+		player.move(val);
+		this.activeplayer = player;
+		
+		this.roundfinished = true;
 		return player;
 		/*this.activeplayer = player;
 		this.movePlayer(activeplayer, val);
 		return this.activeplayer;*/
+	}
+	
+	@Override
+	public boolean roundFinished() throws RemoteException
+	{
+		return this.roundfinished;
+	}
+	
+	@Override
+	public Player getOtherPlayer() throws RemoteException
+	{
+		this.roundfinished = false;
+		if(this.activeplayer.getId() == 1)
+			this.whosturn = 2;
+		else
+			this.whosturn = 1;
+		return this.activeplayer;
 	}
 	
 	//getter methods
@@ -173,6 +198,8 @@ public class Game implements GameInterface {
 	Player player1;
 	Player player2;
 	Player activeplayer;
+	private int whosturn;
+	private boolean roundfinished;
 	
 	
 	
