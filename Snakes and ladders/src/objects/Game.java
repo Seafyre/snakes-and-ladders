@@ -35,16 +35,8 @@ public class Game implements GameInterface {
 		{
 			if(board.getField(activeplayer.getPosition()).getUfoSrcDest() == 2)
 			{
-				this.dice.setDisabled(true);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				System.out.println("Player " + Integer.toString(activeplayer.getId()) + " hit a ufo");
 				activeplayer.move(20);
-				this.board.update_fields(activeplayer);
-				this.dice.setDisabled(false);
 			}
 		}
 	}
@@ -56,16 +48,8 @@ public class Game implements GameInterface {
 		{
 			if(board.getField(activeplayer.getPosition()).getWormSrcDest() == 2)
 			{
-				this.dice.setDisabled(true);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				System.out.println("Player " + Integer.toString(activeplayer.getId()) + " hit a wormhole");
 				activeplayer.move(-20);
-				this.board.update_fields(activeplayer);
-				this.dice.setDisabled(false);
 			}
 		}
 	}
@@ -160,7 +144,31 @@ public class Game implements GameInterface {
 	public Player moveOnlinePlayer(Player player, int val) throws RemoteException {
 		// TODO Auto-generated method stub
 		
-		player.move(val);
+		
+		//player.move(val);
+		
+		System.out.println("Player position is: " + Integer.toString(this.board.getField(player.getPosition()).getUfoSrcDest()));
+		
+		//error here
+		if(!player.hasWon())
+		{
+			if(board.getField(player.getPosition() + val).getUfoSrcDest() == 2)
+			{
+				System.out.println("Player " + Integer.toString(player.getId()) + " hit a ufo");
+				player.move(val + 20);
+			}
+			else if(board.getField(player.getPosition() + val).getWormSrcDest() == 2)
+			{
+				System.out.println("Player " + Integer.toString(player.getId()) + " hit a wormhole");
+				player.move(val - 20);
+			}
+			else
+			{
+				player.move(val);
+			}
+		}
+		
+		
 		this.activeplayer = player;
 		
 		this.roundfinished = true;

@@ -59,7 +59,7 @@ public class Client2 {
 	        		 //System.out.println(stub.run_online(client2.dice.getVal())); 
 	        		 if(!client2.dice.getRoll())
 	        		 {
-	        			 client2.dice.setDisabled(true);
+	        			client2.dice.setDisabled(true);
 		        		client2.myturn = false;
 	        			client2.myPlayer = (Player) stub.moveOnlinePlayer(client2.myPlayer, client2.dice.getVal());
 		        		 
@@ -70,6 +70,7 @@ public class Client2 {
 	        	 else if(client2.myturn == false)
 	        	 {
 	        		 if(stub.roundFinished())
+	        		 
 	        			 client2.board.update_fields(stub.getOtherPlayer());
 	        		 if(stub.turn() == 2)
 	        		 {
