@@ -7,6 +7,8 @@ import java.awt.LayoutManager;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -15,8 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.OverlayLayout;
 import javax.swing.border.Border;
 
-public class Field 
+public class Field implements Serializable
 {
+	
 	
 	Field(int id, int link, int width, int height)
 	{
