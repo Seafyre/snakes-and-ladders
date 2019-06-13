@@ -54,6 +54,7 @@ public class Client2 {
 	         // Calling the remote method using the obtained object 
 	         while(true)
 	         {
+
 	        	 if(client2.myturn == true && !client2.myPlayer.hasWon())
 	 			 {
 	        		 //System.out.println(stub.run_online(client2.dice.getVal())); 
@@ -79,6 +80,7 @@ public class Client2 {
 	        		 //client2.afterRoundDelay(500);
 	        		 //System.out.println("client2 waiting...");
 	        	 }
+	        	 
 	        	 if(client2.myPlayer.hasWon() || client2.otherPlayer.hasWon())
 	        	 {
 	        		 if(client2.myPlayer.hasWon())
@@ -88,6 +90,7 @@ public class Client2 {
 	        		 
 	        		 break;
 	        	 }
+	        	 
 	        	 client2.afterRoundDelay(10);
 	         }
 	         
