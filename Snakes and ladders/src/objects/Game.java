@@ -168,6 +168,12 @@ public class Game implements GameInterface {
 					player.move(val);
 				}
 			}
+			
+			if(player.getPosition() == board.getSize())
+			{
+				System.out.println("Player: " + Integer.toString(player.getId()) + " won");
+				player.setWon();
+			}
 		}
 		
 		

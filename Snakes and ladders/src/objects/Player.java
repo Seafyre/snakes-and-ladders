@@ -96,13 +96,7 @@ public class Player implements Serializable {
 	//move the player in relation to its current position
 	public void move(int amount)
 	{
-		if(this.getPosition() + amount < 100)
-			this.setPosition(this.getPosition() + amount);
-		else
-		{
-			this.setPosition(99);
-			this.setWon();
-		}
+		this.setPosition(this.getPosition() + amount);
 		//System.out.println("new position of " + this.name + " is: " + this.getPosition());
 	}
 	

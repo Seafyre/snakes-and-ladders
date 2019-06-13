@@ -71,7 +71,12 @@ public class Client2 {
 	        	 else if(client2.myturn == false)
 	        	 {
 	        		 if(stub.roundFinished())
-	        			 client2.board.update_fields(stub.getOtherPlayer());
+	        		 {
+	        			 client2.otherPlayer = stub.getOtherPlayer();
+	        			 client2.board.update_fields(client2.otherPlayer);
+	        		 }
+	        		 
+	        		 
 	        		 if(stub.turn() == 2)
 	        		 {
 	        			 client2.myturn = true;
