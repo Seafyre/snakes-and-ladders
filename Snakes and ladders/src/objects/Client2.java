@@ -70,7 +70,6 @@ public class Client2 {
 	        	 else if(client2.myturn == false)
 	        	 {
 	        		 if(stub.roundFinished())
-	        		 
 	        			 client2.board.update_fields(stub.getOtherPlayer());
 	        		 if(stub.turn() == 2)
 	        		 {

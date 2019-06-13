@@ -83,6 +83,7 @@ public class Field implements Serializable
 	//setter methods
 	public void setplayer(int amount, Player activeplayer)
 	{
+			
 		this.hasPlayers = amount;
 		//System.out.println("Field " + Integer.toString(this.id) + " has " + Integer.toString(this.hasPlayers()) + " Players");
 		
