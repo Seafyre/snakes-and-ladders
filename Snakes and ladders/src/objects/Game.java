@@ -147,24 +147,26 @@ public class Game implements GameInterface {
 		
 		//player.move(val);
 		
-		System.out.println("Player position is: " + Integer.toString(this.board.getField(player.getPosition()).getUfoSrcDest()));
 		
 		//error here
 		if(!player.hasWon())
 		{
-			if(board.getField(player.getPosition() + val).getUfoSrcDest() == 2)
+			if(player.getPosition() + val <= board.getSize())
 			{
-				System.out.println("Player " + Integer.toString(player.getId()) + " hit a ufo");
-				player.move(val + 20);
-			}
-			else if(board.getField(player.getPosition() + val).getWormSrcDest() == 2)
-			{
-				System.out.println("Player " + Integer.toString(player.getId()) + " hit a wormhole");
-				player.move(val - 20);
-			}
-			else
-			{
-				player.move(val);
+				if(board.getField(player.getPosition() + val).getUfoSrcDest() == 2)
+				{
+					System.out.println("Player " + Integer.toString(player.getId()) + " hit a ufo");
+					player.move(val + 20);
+				}
+				else if(board.getField(player.getPosition() + val).getWormSrcDest() == 2)
+				{
+					System.out.println("Player " + Integer.toString(player.getId()) + " hit a wormhole");
+					player.move(val - 20);
+				}
+				else
+				{
+					player.move(val);
+				}
 			}
 		}
 		
