@@ -65,7 +65,6 @@ public class Game implements GameInterface {
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -96,7 +95,6 @@ public class Game implements GameInterface {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -142,8 +140,6 @@ public class Game implements GameInterface {
 	
 	@Override
 	public Player moveOnlinePlayer(Player player, int val) throws RemoteException {
-		// TODO Auto-generated method stub
-		
 		
 		//player.move(val);
 		

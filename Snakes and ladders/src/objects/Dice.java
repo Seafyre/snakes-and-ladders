@@ -92,5 +92,4 @@ public class Dice {
 	augenZahl = 1 + wuerfel.nextInt(6);
 	System.out.println(augenZahl);*/
 			
-
 }

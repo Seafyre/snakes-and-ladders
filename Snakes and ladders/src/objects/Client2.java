@@ -28,7 +28,6 @@ public class Client2 {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -103,6 +102,8 @@ public class Client2 {
 	      } catch (Exception e) {
 	         System.err.println("Client exception: " + e.toString()); 
 	         e.printStackTrace(); 
-	      } 
-	   } 
+	      }
+	      
+	   }
+	
 }

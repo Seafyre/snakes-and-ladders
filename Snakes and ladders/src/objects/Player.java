@@ -118,4 +118,3 @@ public class Player implements Serializable {
 	String modelpath;
 	
 }
-

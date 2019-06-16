@@ -28,12 +28,11 @@ public class Client {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
-	   
-	   
+	
 	private Gameboard board;
 	private Dice dice;
 	private Player myPlayer;
@@ -100,6 +99,8 @@ public class Client {
 	      } catch (Exception e) {
 	         System.err.println("Client exception: " + e.toString()); 
 	         e.printStackTrace(); 
-	      } 
-	   } 
+	      }
+	      
+	   }
+	
 }

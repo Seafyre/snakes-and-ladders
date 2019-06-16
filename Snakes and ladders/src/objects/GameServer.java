@@ -7,8 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class GameServer {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try { 
+		try {
 			
 			 Registry registry = LocateRegistry.createRegistry(1099);
 	         // Instantiating the implementation class 
@@ -27,9 +26,8 @@ public class GameServer {
 	      } catch (Exception e) { 
 	         System.err.println("Server exception: " + e.toString()); 
 	         e.printStackTrace(); 
-	      } 
-		
+	      }
 		
 	}
-
+	
 }

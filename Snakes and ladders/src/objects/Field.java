@@ -49,7 +49,6 @@ public class Field implements Serializable
 		try {
 			this.myPicture = ImageIO.read(new File("images/tile.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		 this.picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(width, height, Image.SCALE_FAST)));
@@ -96,7 +95,6 @@ public class Field implements Serializable
 				try {
 					this.playerModel = ImageIO.read(new File(activeplayer.getModelPath()));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				this.playerLabel = new JLabel(new ImageIcon(playerModel.getScaledInstance(this.width, this.height, Image.SCALE_FAST)));
@@ -135,7 +133,6 @@ public class Field implements Serializable
 			try {
 				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			this.ufoLabel = new JLabel(new ImageIcon(this.ufoModel.getScaledInstance(this.width-20, this.height, Image.SCALE_FAST)));
@@ -154,7 +151,6 @@ public class Field implements Serializable
 			try {
 				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			this.ufoLabel = new JLabel(new ImageIcon(this.ufoModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
@@ -179,7 +175,6 @@ public class Field implements Serializable
 			try {
 				this.wormholeModel = ImageIO.read(new File("images/wormholedest.png"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			this.wormholeLabel = new JLabel(new ImageIcon(this.wormholeModel.getScaledInstance(this.width, this.height, Image.SCALE_FAST)));
@@ -198,7 +193,6 @@ public class Field implements Serializable
 			try {
 				this.wormholeModel = ImageIO.read(new File("images/wurmloch.png"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			this.wormholeLabel = new JLabel(new ImageIcon(this.wormholeModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
@@ -269,7 +263,7 @@ public class Field implements Serializable
 	boolean hasPlayerModel;
 	boolean hasUfoModel;
 	boolean hasWormModel;
-	//background image of each seperate tile
+	//background image of each separate tile
 	BufferedImage myPicture;
 	JLabel picLabel;
 	//add(picLabel);
@@ -288,5 +282,4 @@ public class Field implements Serializable
 	int ufosrcdest;
 	int wormsrcdest;
 	
-
 }
