@@ -7,13 +7,11 @@ import javax.swing.SwingUtilities;
 
 public class Game implements GameInterface {
 
-	Game(int boardwidth, int boardheigth, int boardsize, boolean client)
-	{
+	Game(int boardwidth, int boardheigth, int boardsize, boolean client) {
 		this.init_game(boardwidth, boardheigth, boardsize, client);
 	}
 	
-	public void init_game(int boardwidth, int boardheigth, int boardsize, boolean client)
-	{
+	public void init_game(int boardwidth, int boardheigth, int boardsize, boolean client) {
 		
 		this.player1 = new Player(1, "Nick", "Green");
 		this.player2 = new Player(2, "Sebastian", "Blue");
@@ -28,38 +26,29 @@ public class Game implements GameInterface {
 		
 	}
 	
-	//check if the acitveplayer is standing on an ufo source field, if so move him up
-	private void checkUfo(Player activeplayer)
-	{
-		if(!activeplayer.hasWon())
-		{
-			if(board.getField(activeplayer.getPosition()).getUfoSrcDest() == 2)
-			{
+	// Check if the active player is standing on an ufo source field, if so move him up
+	private void checkUfo(Player activeplayer) {
+		if(!activeplayer.hasWon()) {
+			if(board.getField(activeplayer.getPosition()).getUfoSrcDest() == 2) {
 				System.out.println("Player " + Integer.toString(activeplayer.getId()) + " hit a ufo");
 				activeplayer.move(20);
 			}
 		}
 	}
 	
-	//check if the acitveplayer is standing on an wormhole source field, if so move him down
-	private void checkWormhole(Player activeplayer)
-	{
-		if(!activeplayer.hasWon())
-		{
-			if(board.getField(activeplayer.getPosition()).getWormSrcDest() == 2)
-			{
+	// Check if the active player is standing on an wormhole source field, if so move him down
+	private void checkWormhole(Player activeplayer) {
+		if(!activeplayer.hasWon()) {
+			if(board.getField(activeplayer.getPosition()).getWormSrcDest() == 2) {
 				System.out.println("Player " + Integer.toString(activeplayer.getId()) + " hit a wormhole");
 				activeplayer.move(-20);
 			}
 		}
 	}
 	
-	private void movePlayer(Player activeplayer, int randomVal)
-	{
-		if(activeplayer.getPosition() + randomVal < this.board.getSize())
-		{
-			for(int i = 0; i < randomVal; i++)
-			{
+	private void movePlayer(Player activeplayer, int randomVal) {
+		if(activeplayer.getPosition() + randomVal < this.board.getSize()) {
+			for(int i = 0; i < randomVal; i++) {
 				activeplayer.move(1);
 				this.board.update_fields(activeplayer);
 				try {
@@ -69,17 +58,14 @@ public class Game implements GameInterface {
 				}
 			}
 		}
-		else
-		{
+		else {
 			activeplayer.move(this.board.getSize());
 			activeplayer.setWon();
 		}
 	}
 	
-	private Player nextPlayer(Player activeplayer)
-	{
-		if(!activeplayer.hasWon())
-		{
+	private Player nextPlayer(Player activeplayer) {
+		if(!activeplayer.hasWon()) {
 			if(activeplayer == this.player1)
 				return this.player2;
 			else
@@ -89,8 +75,7 @@ public class Game implements GameInterface {
 			return activeplayer;
 	}
 	
-	private void afterRoundDelay(int time)
-	{
+	private void afterRoundDelay(int time) {
 
 		try {
 			Thread.sleep(time);
@@ -99,28 +84,24 @@ public class Game implements GameInterface {
 		}
 	}
 	
-	public void run()
-	{
+	public void run() {
 		
-		while(true)
-		{
-			if(!this.dice.getRoll() && !activeplayer.hasWon())
-			{
-				//getting value of rolled dice
+		while(true) {
+			if(!this.dice.getRoll() && !activeplayer.hasWon()) {
+				// Getting value of rolled dice
 				int randomVal = this.dice.getVal();
 				
-				//move player randomVal fields
+				// Move player randomVal fields
 				this.movePlayer(activeplayer, randomVal);
 				
-				//check if player stands on an ufo/wormhole, if so move him again
+				// Check if player stands on an ufo/wormhole, if so move him again
 				this.checkUfo(activeplayer);
 				this.checkWormhole(activeplayer);
 				
-				//starting nextround by changing current player
+				// Starting next round by changing current player
 				activeplayer = this.nextPlayer(activeplayer);
 			}
-			else if(activeplayer.hasWon())
-			{
+			else if(activeplayer.hasWon()) {
 				System.out.println("Player: " + activeplayer.getName() + " has won!");
 				System.exit(0);
 			}
@@ -133,8 +114,7 @@ public class Game implements GameInterface {
 	}
 
 	@Override
-	public int turn() throws RemoteException
-	{
+	public int turn() throws RemoteException {
 		return this.whosturn;
 	}
 	
@@ -144,29 +124,23 @@ public class Game implements GameInterface {
 		//player.move(val);
 		
 		
-		//error here
-		if(!player.hasWon())
-		{
-			if(player.getPosition() + val <= board.getSize())
-			{
-				if(board.getField(player.getPosition() + val).getUfoSrcDest() == 2)
-				{
+		// Error here
+		if(!player.hasWon()) {
+			if(player.getPosition() + val <= board.getSize()) {
+				if(board.getField(player.getPosition() + val).getUfoSrcDest() == 2) {
 					System.out.println("Player " + Integer.toString(player.getId()) + " hit a ufo");
 					player.move(val + 20);
 				}
-				else if(board.getField(player.getPosition() + val).getWormSrcDest() == 2)
-				{
+				else if(board.getField(player.getPosition() + val).getWormSrcDest() == 2) {
 					System.out.println("Player " + Integer.toString(player.getId()) + " hit a wormhole");
 					player.move(val - 20);
 				}
-				else
-				{
+				else {
 					player.move(val);
 				}
 			}
 			
-			if(player.getPosition() == board.getSize())
-			{
+			if(player.getPosition() == board.getSize()) {
 				System.out.println("Player: " + Integer.toString(player.getId()) + " won");
 				player.setWon();
 			}
@@ -183,14 +157,12 @@ public class Game implements GameInterface {
 	}
 	
 	@Override
-	public boolean roundFinished() throws RemoteException
-	{
+	public boolean roundFinished() throws RemoteException {
 		return this.roundfinished;
 	}
 	
 	@Override
-	public Player getOtherPlayer() throws RemoteException
-	{
+	public Player getOtherPlayer() throws RemoteException {
 		this.roundfinished = false;
 		if(this.activeplayer.getId() == 1)
 			this.whosturn = 2;
@@ -199,9 +171,8 @@ public class Game implements GameInterface {
 		return this.activeplayer;
 	}
 	
-	//getter methods
-	Gameboard getBoard()
-	{
+	// Getter methods
+	Gameboard getBoard() {
 		return this.board;
 	}
 	
@@ -213,9 +184,8 @@ public class Game implements GameInterface {
 	private int whosturn;
 	private boolean roundfinished;
 	
-	
-	
 	/*public Board board;
 	public Dice dice;
 	public Playerlist pl;*/
+	
 }

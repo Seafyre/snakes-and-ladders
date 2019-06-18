@@ -2,25 +2,21 @@ package objects;
 
 public class Wormhole {
 
-	Wormhole(int size)
-	{
+	Wormhole(int size) {
 		this.init(size);
 	}
 	
-	private void init(int size)
-	{
+	private void init(int size) {
 		this.setSize(size);
 	}
 	
-	//getter methods
-	public int getSize()
-	{
+	// Getter methods
+	public int getSize() {
 		return this.size;
 	}
 	
-	//setter methods
-	private void setSize(int size)
-	{
+	// Setter methods
+	private void setSize(int size) {
 		this.size = size;
 	}
 	

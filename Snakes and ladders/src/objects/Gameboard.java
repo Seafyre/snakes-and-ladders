@@ -26,7 +26,7 @@ public class Gameboard implements Serializable {
 		this.init_board(width, heigth, size, activeplayer, server);
 	}
 	
-	//initial methods
+	// Initial methods
 	private void init_board(int width, int heigth, int size, Player activeplayer, boolean server)
 	{
 		this.swap = false;
@@ -36,34 +36,34 @@ public class Gameboard implements Serializable {
 	
 	private void setup_board(int width, int heigth, int size, Player activeplayer, boolean client)
 	{
-		//creating new jframe
+		// Creating new jframe
 		this.board = new JFrame("Snakes and Ladders");
-		//setting its size
+		// Setting its size
 		this.heigth = heigth;
 		this.width = width;
-		//size = amount of fields
+		// Size = amount of fields
 		this.size = size;
 		this.board.setSize(this.width, this.heigth);
-		//setting the layout to gridbagconstraints
+		// Setting the layout to gridbagconstraints
 		this.board.setLayout(new GridBagLayout());
-		//make windows appear at center of screen
+		// Make windows appear at the center of screen
 		this.board.setLocationRelativeTo(null);
-		//making it visible
+		// Making it visible
 		this.board.setVisible(client);
-		//make windows close when clicking on 'x' in top right corner
+		// Make windows close when clicking on 'x' in top right corner
 		this.board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//initialize fields
+		// Initialize fields
 		this.init_fields(activeplayer);
 	}
 	
-	//init field layout
+	// Initializing field layout
 	private void init_fields(Player activeplayer)
 	{
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTH;
 		c.gridy = 0;
 		
-		//initializing basic fields
+		// Initializing basic fields
 		for(int i = 0; i < this.size; i++)
 		{
 			if(i%10 == 0) 
@@ -85,20 +85,20 @@ public class Gameboard implements Serializable {
 			this.board.add(((Field) this.fields.get(i)).get_piclabel(), c);
 		}
 		
-		//initializing ufos
+		// Initializing ufos
 		this.initUfos();
 		
-		//initializing Wormholes
+		// Initializing wormholes
 		this.initWormholes();
 		
-		//Updating frame to make initialized fields appear
+		// Updating frame to make initialized fields appear
 		this.board.revalidate();
 		this.board.repaint();
 	}
 	
 	
 	
-	//init ufos
+	// Initializing ufos
 	//1 = src, 2 = dest, everything else -> just overlay
 	private void initUfos()
 	{
@@ -114,7 +114,7 @@ public class Gameboard implements Serializable {
 		this.initWormhole(78, 3);
 	}
 	
-	//initialize single ufo
+	// Initializing single ufo
 	private void initUfo(int fieldid, int size)
 	{
 		for(int i = 0; i < this.size; i++)
@@ -140,7 +140,7 @@ public class Gameboard implements Serializable {
 		}
 	}
 	
-	//initialize single wormhole
+	// Initializing single wormhole
 	private void initWormhole(int fieldid, int size)
 	{
 		for(int i = 0; i < this.size; i++)
@@ -149,19 +149,19 @@ public class Gameboard implements Serializable {
 			{
 				for(int k = 0; k < size; k++)
 				{	
-					//setting the src(2) to size-1, so the src is set to the last tile reached by wormhole/ufo
+					// Setting the src(2) to size-1, so the src is set to the last tile reached by wormhole/ufo
 					if(k == 0)
 					{
 						((Field)this.fields.get(i+(k*10))).setWormhole(new Wormhole(3), 2);
 					}
-					//otherwise just pass in k
+					// Otherwise just pass in k
 					else if(k == size-1)
 					{
 						((Field)this.fields.get(i+(k*10))).setWormhole(new Wormhole(3), 0);
 					}
 					else if(k != 2)
 						((Field)this.fields.get(i+(k*10))).setWormhole(new Wormhole(3), k);
-					//if ks is equal to 2, we can't just pass it, since 2 indicates the src, so we just pass in size+1
+					// If ks is equal to 2, we can't just pass it, since 2 indicates the src, so we just pass in size+1
 					else
 						((Field)this.fields.get(i+(k*10))).setWormhole(new Wormhole(3), size+1);
 					
@@ -173,12 +173,12 @@ public class Gameboard implements Serializable {
 		}
 	}
 	
-	//calculates the id of each field, so the fieldorder is right
+	// Calculates the id of each field, so the field order is right
 	private int calculateFieldId(int i)
 	{
 		
 		int temp = 0;
-		//order change after each row(10 fields)
+		// Order change after each row(10 fields)
 		if (i > 0 && i%10 == 0)
 			this.swap = !this.swap;
 		
@@ -199,7 +199,7 @@ public class Gameboard implements Serializable {
 		//int subtract = size/10;
 	}
 	
-	//update fields to display new playerposition after each round
+	// Update fields to display new player position after each round
 	public void update_fields(Player player)
 	{
 		if(!player.hasWon())
@@ -235,13 +235,13 @@ public class Gameboard implements Serializable {
 			}
 		}
 			
-		//refresh GUI components
+		// Refresh GUI components
 		this.board.revalidate();
 		this.board.repaint();
 	}
 	
-	//getter methods
-	//return amount of fields on the board
+	// Getter methods
+	// Return amount of fields on the board
 	public int getSize()
 	{
 		return this.size;
@@ -261,7 +261,7 @@ public class Gameboard implements Serializable {
 			
 	}
 	
-	//setter methods
+	// Setter methods
 	/*private void set_background_image()
 	{
 		try {
@@ -275,22 +275,21 @@ public class Gameboard implements Serializable {
 	
 	
 	
-	//attributes
-	//board jframe
+	// Attributes
+	// Board jframe
 	private JFrame board;
-	//picked array list due to performance
+	// Picked array list due to performance
 	private List fields = new ArrayList();
-	//List of ufos on the map
+	// List of ufos on the map
 	private List ufos = new ArrayList();
 	
-	//heigth of board(in pixels)
+	// Height of board(in pixels)
 	private int heigth;
-	//width of board(in pixels)
+	// Width of board(in pixels)
 	private int width;
-	//size of board(in fields)
+	// Size of board(in fields)
 	private int size;
-	//Field swap variable to determine wether we need to change order of row
+	// Field swap variable to determine whether we need to change order of row
 	private boolean swap;
-	
 	
 }

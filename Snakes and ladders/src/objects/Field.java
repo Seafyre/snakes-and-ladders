@@ -17,19 +17,16 @@ import javax.swing.JLabel;
 import javax.swing.OverlayLayout;
 import javax.swing.border.Border;
 
-public class Field implements Serializable
-{
+public class Field implements Serializable {
 	
 	
-	Field(int id, int link, int width, int height)
-	{
+	Field(int id, int link, int width, int height) {
 		this.init(id, link, width, height);
 	}
 	
-	//initial methods
-	public void init(int id, int link, int width, int height)
-	{
-		//setting the id - 100, so we start from the bottom left corner
+	// Initial methods
+	public void init(int id, int link, int width, int height) {
+		// Setting the id - 100, so we start from the bottom left corner
 		this.id = id;
 		this.link = link;
 		this.width = width;
@@ -38,14 +35,13 @@ public class Field implements Serializable
 		this.ufo = null;
 		this.ufosrcdest = 0;
 		
-		//init background picture
+		// Initializing background picture
 		this.init_bg_picture(width, height);
 	}
 	
 	
-	//setting space bg image on every field
-	private void init_bg_picture(int width, int height)
-	{
+	// Setting space background image on every field
+	private void init_bg_picture(int width, int height) {
 		try {
 			this.myPicture = ImageIO.read(new File("images/tile.png"));
 		} catch (IOException e) {
@@ -53,24 +49,23 @@ public class Field implements Serializable
 		}
 		 this.picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(width, height, Image.SCALE_FAST)));
 		
-		 //adding an overlaylayout, so we can display the playermodel over the tile's background image
+		 // Adding an overlaylayout, so we can display the playermodel over the tile's background image
 		 LayoutManager overlay = new OverlayLayout(picLabel);
 		 picLabel.setLayout(overlay);
 
-		 //adding the displayed numbers to the field
+		 // Adding the displayed numbers to the field
 		 this.initFieldNumber();
 		 
-		 //set background
-		// create a line border with the specified color and width
-        //Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
+		// Set background
+		// Create a line border with the specified color and width
+        // Border border = BorderFactory.createLineBorder(Color.BLUE, 1);
  
-        // set the border of this component
+        // Set the border of this component
         //this.picLabel.setBorder(border);
 	}
 	
-	//add the id of each field to it	
-	private void initFieldNumber()
-	{
+	// Add the id of each field to it	
+	private void initFieldNumber() {
 		JLabel num = new JLabel(Integer.toString(this.id));
         num.setFont(num.getFont().deriveFont(18f));
         num.setForeground(Color.CYAN);
@@ -79,18 +74,15 @@ public class Field implements Serializable
         picLabel.add(num);
 	}
 	
-	//setter methods
-	public void setplayer(int amount, Player activeplayer)
-	{
+	// Setter methods
+	public void setplayer(int amount, Player activeplayer) {
 			
 		this.hasPlayers = amount;
 		//System.out.println("Field " + Integer.toString(this.id) + " has " + Integer.toString(this.hasPlayers()) + " Players");
 		
-		if(this.hasPlayers >= 1)
-		{
+		if(this.hasPlayers >= 1) {
 			
-			if(!this.hasPlayerModel)
-			{
+			if(!this.hasPlayerModel) {
 				this.hasPlayerModel = true;
 				try {
 					this.playerModel = ImageIO.read(new File(activeplayer.getModelPath()));
@@ -99,7 +91,7 @@ public class Field implements Serializable
 				}
 				this.playerLabel = new JLabel(new ImageIcon(playerModel.getScaledInstance(this.width, this.height, Image.SCALE_FAST)));
 				
-				//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+				// Setting alignments to 0.5f each, so the player model is displayed centered within the field
 				this.playerLabel.setAlignmentX(0.5f);
 				this.playerLabel.setAlignmentY(0.5f);
 				
@@ -110,8 +102,7 @@ public class Field implements Serializable
 			else
 				return;
 		}
-		else
-		{
+		else {
 			//System.out.println("removed on " + Integer.toString(this.id));
 			picLabel.remove(playerLabel);
 			this.hasPlayerModel = false;
@@ -122,13 +113,11 @@ public class Field implements Serializable
 	}
 	
 	//setufo field srcdest = 0 -> src, srcdest = 1 -> dest
-	public void setUfo(Ufo ufo, int srcdest)
-	{
+	public void setUfo(Ufo ufo, int srcdest) {
 		this.ufo = ufo;
 		this.ufosrcdest = srcdest;
 		
-		if(!this.hasUfoModel  && this.ufosrcdest == 0)
-		{
+		if(!this.hasUfoModel  && this.ufosrcdest == 0) {
 			this.hasUfoModel = true;
 			try {
 				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
@@ -137,7 +126,7 @@ public class Field implements Serializable
 			}
 			this.ufoLabel = new JLabel(new ImageIcon(this.ufoModel.getScaledInstance(this.width-20, this.height, Image.SCALE_FAST)));
 			
-			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			// Setting alignments to 0.5f each, so the player model is displayed centered within the field
 			this.ufoLabel.setAlignmentX(0.5f);
 			this.ufoLabel.setAlignmentY(0.5f);
 			
@@ -145,8 +134,7 @@ public class Field implements Serializable
 			picLabel.add(ufoLabel);
 		}
 		
-		if(!this.hasUfoModel && this.ufosrcdest > 0)
-		{
+		if(!this.hasUfoModel && this.ufosrcdest > 0) {
 			this.hasUfoModel = true;
 			try {
 				this.ufoModel = ImageIO.read(new File("images/ufo.png"));
@@ -155,7 +143,7 @@ public class Field implements Serializable
 			}
 			this.ufoLabel = new JLabel(new ImageIcon(this.ufoModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
 			
-			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			// Setting alignments to 0.5f each, so the player model is displayed centered within the field
 			this.ufoLabel.setAlignmentX(0.5f);
 			this.ufoLabel.setAlignmentY(0.5f);
 			
@@ -164,8 +152,7 @@ public class Field implements Serializable
 		}
 	}
 
-	public void setWormhole(Wormhole wormhole, int srcdest)
-	{
+	public void setWormhole(Wormhole wormhole, int srcdest) {
 		this.wormhole = wormhole;
 		this.wormsrcdest = srcdest;
 		
@@ -179,7 +166,7 @@ public class Field implements Serializable
 			}
 			this.wormholeLabel = new JLabel(new ImageIcon(this.wormholeModel.getScaledInstance(this.width, this.height, Image.SCALE_FAST)));
 			
-			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			// Setting alignments to 0.5f each, so the playermodel is displayed centered within the field
 			this.wormholeLabel.setAlignmentX(0.5f);
 			this.wormholeLabel.setAlignmentY(0.5f);
 			
@@ -187,8 +174,7 @@ public class Field implements Serializable
 			picLabel.add(wormholeLabel);
 		}
 		
-		if(!this.hasWormModel && this.wormsrcdest > 0)
-		{
+		if(!this.hasWormModel && this.wormsrcdest > 0) {
 			this.hasWormModel = true;
 			try {
 				this.wormholeModel = ImageIO.read(new File("images/wurmloch.png"));
@@ -197,7 +183,7 @@ public class Field implements Serializable
 			}
 			this.wormholeLabel = new JLabel(new ImageIcon(this.wormholeModel.getScaledInstance(this.width-20, this.height*3, Image.SCALE_FAST)));
 			
-			//setting alignments to 0.5f each, so the playermodel is displayed centered within the field
+			// Setting alignments to 0.5f each, so the player model is displayed centered within the field
 			this.wormholeLabel.setAlignmentX(0.5f);
 			this.wormholeLabel.setAlignmentY(0.5f);
 			
@@ -206,55 +192,47 @@ public class Field implements Serializable
 		}
 	}
 	
-	//getter methods
-	//return piclabel, to initialize fields in gameboard
-	public JLabel get_piclabel()
-	{
+	// Getter methods
+	// Return piclabel, to initialize fields in gameboard
+	public JLabel get_piclabel() {
 		return this.picLabel;
 	}
 	
-	public JLabel getUfoLabel()
-	{
+	public JLabel getUfoLabel() {
 		return this.ufoLabel;
 	}
 	
 	//return playerlabel
-	public JLabel getPlayerLabel()
-	{
+	public JLabel getPlayerLabel() {
 		return this.playerLabel;
 	}
 	
 	
-	//return id of field
-	public int getid()
-	{
+	// Return id of field
+	public int getid() {
 		return this.id;
 	}
 	
-	//return linkstatus of field(if its connected via ladder/snake))
-	public int getlink()
-	{
+	// Return link status of field(if its connected via ladder/snake))
+	public int getlink() {
 		return this.link;
 	}
 	
-	//check if there's a player standing on the field
-	public int hasPlayers()
-	{
+	// Check if there's a player standing on the field
+	public int hasPlayers() {
 		return this.hasPlayers;
 	}
 	
-	//check if the field is the source or dest of a ufo
-	public int getUfoSrcDest()
-	{
+	// Check if the field is the source or dest of a ufo
+	public int getUfoSrcDest() {
 		return this.ufosrcdest;
 	}
 	
-	public int getWormSrcDest()
-	{
+	public int getWormSrcDest() {
 		return this.wormsrcdest;
 	}
 	
-	//attributes
+	// Attributes
 	private int id;
 	private int link;
 	private int width;
@@ -263,14 +241,14 @@ public class Field implements Serializable
 	boolean hasPlayerModel;
 	boolean hasUfoModel;
 	boolean hasWormModel;
-	//background image of each separate tile
+	// Background image of each separate tile
 	BufferedImage myPicture;
 	JLabel picLabel;
 	//add(picLabel);
 	BufferedImage playerModel;
 	JLabel playerLabel;
 	
-	//ufo/wormhole pics
+	// Ufo/Wormhole pics
 	BufferedImage ufoModel;
 	JLabel ufoLabel;
 	BufferedImage wormholeModel;

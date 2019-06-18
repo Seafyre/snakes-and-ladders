@@ -3,13 +3,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry; 
 
 public class Client {
-	private Client(int boardwidth, int boardheigth, int boardsize, boolean client) 
-	{
+	private Client(int boardwidth, int boardheigth, int boardsize, boolean client) {
 		this.init(boardwidth, boardheigth, boardsize, client);
 	}  
 	
-	private void init(int boardwidth, int boardheigth, int boardsize, boolean client)
-	{
+	private void init(int boardwidth, int boardheigth, int boardsize, boolean client) {
 		this.dice = new Dice(200, 200);
 		this.myPlayer = new Player(1, "Nick", "Green");
 		this.otherPlayer = new Player(2, "Sebastian", "Blue");
@@ -17,13 +15,11 @@ public class Client {
 		this.myturn = true;
 	}
 	
-	public void setGameboard(Gameboard board)
-	{
+	public void setGameboard(Gameboard board) {
 		this.board = board;
 	}
 	
-	private void afterRoundDelay(int time)
-	{
+	private void afterRoundDelay(int time) {
 
 		try {
 			Thread.sleep(time);
@@ -51,14 +47,11 @@ public class Client {
 	         GameInterface stub = (GameInterface) registry.lookup("GameInterface"); 
 	         
 	         // Calling the remote method using the obtained object 
-	         while(true)
-	         {
+	         while(true) {
 	        	 
-	        	 if(client1.myturn == true && !client1.myPlayer.hasWon())
-	 			 {
-	        		 //System.out.println(stub.run_online(client1.dice.getVal())); 
-	        		 if(!client1.dice.getRoll())
-	        		 {
+	        	 if(client1.myturn == true && !client1.myPlayer.hasWon()) {
+	        		 // System.out.println(stub.run_online(client1.dice.getVal())); 
+	        		 if(!client1.dice.getRoll()) {
 	        			client1.dice.setDisabled(true);
 		        		client1.myturn = false;
 	        			client1.myPlayer = (Player) stub.moveOnlinePlayer(client1.myPlayer, client1.dice.getVal());
@@ -67,15 +60,12 @@ public class Client {
 		        		client1.board.update_fields(client1.myPlayer);
 	        		 }
 	 			 }
-	        	 else if(client1.myturn == false)
-	        	 {
-	        		 if(stub.roundFinished())
-	        		 {
+	        	 else if(client1.myturn == false) {
+	        		 if(stub.roundFinished()) {
 	        			 client1.otherPlayer = stub.getOtherPlayer();
 	        			 client1.board.update_fields(client1.otherPlayer);
 	        		 }
-	        		 if(stub.turn() == 1)
-	        		 {
+	        		 if(stub.turn() == 1) {
 	        			 client1.myturn = true;
 	        			 client1.dice.setDisabled(false);
 	        		 }
@@ -83,8 +73,7 @@ public class Client {
 	        		 //System.out.println("client1 waiting...");
 	        	 }
 	        	 
-	        	 if(client1.myPlayer.hasWon() || client1.otherPlayer.hasWon())
-	        	 {
+	        	 if(client1.myPlayer.hasWon() || client1.otherPlayer.hasWon()) {
 	        		 if(client1.myPlayer.hasWon())
 	        			 System.out.println("you won");
 	        		 else
